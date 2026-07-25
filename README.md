@@ -2,6 +2,12 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
+## Documentation
+You can find the core concept and technical logic documentation in the [docs](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs) directory:
+- [Game Concept & Idea](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs/idea.md)
+- [Tech Stack & Code Logic](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs/logic.md)
+
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)

@@ -1,0 +1,274 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Neutral Voice | Vivid Satire</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#920028",
+                    "tertiary-container": "#c9a900",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#eeedf3",
+                    "surface-bright": "#faf9fe",
+                    "inverse-surface": "#2f3034",
+                    "surface-dim": "#dad9df",
+                    "on-surface-variant": "#5c3f41",
+                    "secondary-fixed-dim": "#00dbe9",
+                    "surface": "#faf9fe",
+                    "surface-tint": "#be0037",
+                    "inverse-primary": "#ffb3b6",
+                    "inverse-on-surface": "#f1f0f5",
+                    "on-tertiary-container": "#4c3e00",
+                    "primary-container": "#e12149",
+                    "surface-variant": "#e3e2e7",
+                    "on-background": "#1a1b1f",
+                    "on-tertiary-fixed": "#221b00",
+                    "primary-fixed-dim": "#ffb3b6",
+                    "tertiary": "#705d00",
+                    "secondary": "#006970",
+                    "primary-fixed": "#ffdada",
+                    "on-tertiary-fixed-variant": "#544600",
+                    "on-secondary-fixed": "#002022",
+                    "surface-container-high": "#e9e7ed",
+                    "error-container": "#ffdad6",
+                    "outline": "#906f70",
+                    "surface-container-low": "#f4f3f8",
+                    "secondary-container": "#00eefc",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#1a1b1f",
+                    "background": "#faf9fe",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed": "#40000c",
+                    "on-primary-container": "#fffbff",
+                    "primary": "#ba0035",
+                    "on-secondary-fixed-variant": "#004f54",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#e3e2e7",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#e9c400",
+                    "secondary-fixed": "#7df4ff",
+                    "tertiary-fixed": "#ffe170",
+                    "outline-variant": "#e5bdbe",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00686f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "xl": "40px",
+                    "sm": "8px",
+                    "unit": "4px",
+                    "container-margin": "20px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-caps": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "display-lg-mobile": ["36px", {"lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .vivid-shadow {
+            box-shadow: 8px 8px 0px 0px rgba(186, 0, 53, 0.1);
+        }
+        .instagram-card {
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .dark .instagram-card {
+            border: 1px solid rgba(255,255,255,0.05);
+            background: #2a2a2a;
+        }
+        .active-voice {
+            box-shadow: 0 0 0 3px #ba0035;
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col transition-colors duration-300">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-6 h-20 w-full z-50 bg-surface-container-lowest border-b border-outline-variant sticky top-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white rotate-3">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<h1 class="font-display-lg-mobile text-[24px] tracking-tight text-primary" style="font-family: &quot;Lilita One&quot;, cursive; font-weight: 400;">Celebrity Fence Sitter</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors" id="theme-toggle">
+<span class="material-symbols-outlined text-primary dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined text-primary-fixed-dim hidden dark:block">light_mode</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-start py-8 px-4 max-w-[600px] mx-auto w-full space-y-8">
+<!-- Welcome Headline -->
+<div class="text-center space-y-3 px-4">
+
+<h2 class="font-display-lg text-primary leading-tight">performative <span class="text-secondary">apathy</span></h2>
+<p class="font-body-md text-on-surface-variant max-w-sm mx-auto">Generate a post like your favorite A-lister celebrity. Choose an issue you want to be performatively apathetic about.</p>
+</div>
+<!-- Configurator -->
+<div class="w-full space-y-6">
+<!-- Topic Selection -->
+<div class="instagram-card bg-surface-container-lowest p-6 rounded-[32px] space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">topic</span>
+                        Select Theme
+                    </label>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container hover:scale-105 active:scale-95 transition-all group" id="randomize-btn">
+<span class="material-symbols-outlined text-[18px] group-hover:rotate-180 transition-transform duration-500">casino</span>
+<span class="font-label-caps">Shuffle</span>
+</button>
+</div>
+<div class="relative">
+<select class="w-full bg-surface-container-low border-2 border-outline-variant rounded-2xl px-5 py-4 font-body-lg text-on-surface focus:border-primary focus:ring-0 transition-all cursor-pointer pr-12" id="topic-select" style="transform: translateY(0px);">
+<option value="politics">Politics</option>
+<option value="weather">The Weather</option>
+<option selected="" value="existential_dread">Existential Dread</option>
+<option value="pineapple_pizza">Pineapple on Pizza</option>
+<option value="capitalism">Late-Stage Capitalism</option>
+<option value="coffee">The Concept of Coffee</option>
+<option value="ai_overlords">AI Overlords</option><option value="public_transit">Public Transit</option></select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+</div>
+<!-- Voice Selection -->
+
+<!-- Main Action -->
+<button class="w-full h-20 rounded-[32px] bg-primary text-on-primary hover:brightness-110 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-4 vivid-shadow" id="generate-btn">
+<span class="font-headline-md">Manifest Neutrality</span>
+<span class="material-symbols-outlined text-[32px]">bolt</span>
+</button>
+</div>
+<!-- Preview Card (Instagram Style) -->
+
+<div class="h-24"></div> <!-- Padding for bottom nav -->
+</main>
+<!-- BottomNavBar -->
+
+<script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.theme = 'light';
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        });
+
+        // Functional logic from original
+        const generateBtn = document.getElementById('generate-btn');
+        const randomizeBtn = document.getElementById('randomize-btn');
+        const topicSelect = document.getElementById('topic-select');
+        const previewArea = document.getElementById('preview-area');
+        const voiceOptions = document.querySelectorAll('.voice-option');
+
+        const topics = ['Politics', 'The Weather', 'Existential Dread', 'Pineapple on Pizza', 'Late-Stage Capitalism', 'The Concept of Coffee', 'Slow Walkers', 'Public Transit', 'AI Overlords'];
+
+        randomizeBtn.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * topics.length);
+            const randomTopic = topics[randomIndex];
+            
+            topicSelect.style.transform = 'translateY(-2px)';
+            setTimeout(() => topicSelect.style.transform = 'translateY(0)', 100);
+
+            let found = false;
+            for(let i=0; i<topicSelect.options.length; i++) {
+                if(topicSelect.options[i].text === randomTopic) {
+                    topicSelect.selectedIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) {
+                const newOpt = new Option(randomTopic, randomTopic.toLowerCase().replace(/\s/g, '_'));
+                topicSelect.add(newOpt);
+                topicSelect.selectedIndex = topicSelect.options.length - 1;
+            }
+        });
+
+        generateBtn.addEventListener('click', () => {
+            const originalContent = generateBtn.innerHTML;
+            generateBtn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[32px]">refresh</span>`;
+            generateBtn.disabled = true;
+            
+            setTimeout(() => {
+                generateBtn.innerHTML = originalContent;
+                generateBtn.disabled = false;
+                previewArea.style.opacity = '1';
+                previewArea.style.transform = 'scale(1)';
+            }, 1000);
+        });
+
+        voiceOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                voiceOptions.forEach(v => {
+                    v.classList.remove('active-voice', 'bg-surface-container-high');
+                    v.querySelector('div').classList.replace('bg-primary-container', 'bg-surface-variant');
+                    v.querySelector('span').innerText = 'person_outline';
+                });
+                opt.classList.add('active-voice');
+                opt.querySelector('div').classList.replace('bg-surface-variant', 'bg-primary-container');
+                opt.querySelector('span').innerText = 'person';
+            });
+        });
+
+        // Init theme from system/pref
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+    </script>
+
+
+</body></html>
