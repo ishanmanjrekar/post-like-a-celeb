@@ -32,7 +32,7 @@ function App() {
 
   // Theme state: 'light' | 'dark'
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (localStorage.theme === 'dark') {
       return 'dark';
     }
     return 'light';
