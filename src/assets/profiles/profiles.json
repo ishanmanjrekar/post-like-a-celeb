@@ -1,0 +1,39 @@
+{
+  "profiles": [
+    {
+      "name": "Neutral Voice",
+      "handle": "@the_neutral_take",
+      "avatar": "avatar1.png"
+    },
+    {
+      "name": "Diplomatic Centrist",
+      "handle": "@both_sides_matter",
+      "avatar": "avatar2.png"
+    },
+    {
+      "name": "Performative Ally",
+      "handle": "@thoughts_and_vibes",
+      "avatar": "avatar3.png"
+    },
+    {
+      "name": "PR Approved",
+      "handle": "@statement_pending",
+      "avatar": "avatar4.png"
+    },
+    {
+      "name": "Curated Apathy",
+      "handle": "@minimally_involved",
+      "avatar": "avatar5.png"
+    },
+    {
+      "name": "Balanced Perspective",
+      "handle": "@nuance_enjoyer",
+      "avatar": "avatar6.png"
+    },
+    {
+      "name": "Strategic Silence",
+      "handle": "@no_comment_official",
+      "avatar": "avatar1.png"
+    }
+  ]
+}

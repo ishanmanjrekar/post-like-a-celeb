@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { TOPICS, generatePost } from '../utils/topics';
+import { SHUFFLED_TOPICS, generatePost } from '../utils/topics';
 import type { GeneratedPost } from '../utils/topics';
 
 interface AppState {
@@ -16,7 +16,7 @@ interface AppState {
 }
 
 export const useStore = create<AppState>((set, get) => ({
-  selectedTopicId: TOPICS[0].id,
+  selectedTopicId: SHUFFLED_TOPICS[0].id,
   currentPost: null,
   platform: 'x',
   isExporting: false,
@@ -32,7 +32,7 @@ export const useStore = create<AppState>((set, get) => ({
   },
 
   randomizeTopic: () => {
-    const randomTopic = TOPICS[Math.floor(Math.random() * TOPICS.length)];
+    const randomTopic = SHUFFLED_TOPICS[Math.floor(Math.random() * SHUFFLED_TOPICS.length)];
     const post = generatePost(randomTopic.id);
     
     set({

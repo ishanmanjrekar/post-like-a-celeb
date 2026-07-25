@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { BoundingBox } from './components/BoundingBox';
 import { CelebrityCard } from './components/CelebrityCard';
 import { ShareModal } from './components/ShareModal';
+import { TopicSelect } from './components/TopicSelect';
 import { useStore } from './store/useStore';
-import { TOPICS } from './utils/topics';
+import { TOPICS, SHUFFLED_TOPICS } from './utils/topics';
 import { exportElementAsPng } from './utils/imageExporter';
 import penpencildrawImg from './assets/penpencildraw.jpg';
 import './App.css';
@@ -86,6 +87,8 @@ function App() {
     }
   };
 
+  const selectedTopic = TOPICS.find(t => t.id === (currentPost?.topicId || selectedTopicId)) || TOPICS[0];
+
   return (
     <BoundingBox width={450} height={850}>
       <div className="app-container">
@@ -140,20 +143,11 @@ function App() {
                   </button>
                 </div>
 
-                <div className="select-wrapper">
-                  <select
-                    value={selectedTopicId}
-                    onChange={(e) => setSelectedTopicId(e.target.value)}
-                    className="theme-select"
-                  >
-                    {TOPICS.map((topic) => (
-                      <option key={topic.id} value={topic.id}>
-                        {topic.label}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="material-symbols-outlined select-arrow">expand_more</span>
-                </div>
+                <TopicSelect
+                  topics={SHUFFLED_TOPICS}
+                  value={selectedTopicId}
+                  onChange={setSelectedTopicId}
+                />
 
                 <button
                   onClick={handleGenerate}
@@ -210,6 +204,16 @@ function App() {
             </header>
 
             <main className="scroll-view">
+              {selectedTopic && (
+                <div className="selected-topic-banner">
+                  <span className="selected-topic-label">TOPIC</span>
+                  <div className="selected-topic-content">
+                    <span className="selected-topic-icon">{selectedTopic.icon}</span>
+                    <span className="selected-topic-text">{selectedTopic.label}</span>
+                  </div>
+                </div>
+              )}
+
               <div className="toggle-tabs-row">
                 <button
                   onClick={() => setPlatform('x')}

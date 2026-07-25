@@ -181,3 +181,15 @@ This document lists the distinct styles of performative apathy used to generate 
 - Complaining that "the internet is too polarized" or "nobody listens to each other anymore."
 - Treating political discourse as a purely aesthetic problem of "bad manners" on social media.
 - Position themselves as a mature observer of online noise while ignoring the material reality of the crisis being discussed.
+
+---
+
+## 19. The Four-Box Modular Statement (PenPencilDraw Matrix)
+**The Style**: Constructing a statement using interchangeable, plug-and-play platitude blocks across four columns: Subject/Target, Situation Framing, Moral Principle, and Vague Resolution.
+
+**Key Indicators**:
+- **Target**: "My heart goes out to the students / our youth / the country's future / everyone affected."
+- **Situation**: "This is a difficult time for us all / reminder of what's at stake / moment that needs maturity / time to reflect, not divide."
+- **Principle**: "We must remember there are no easy answers / every voice matters / humanity comes first / this is a complex issue."
+- **Resolution**: "I'm sure we can find common ground / heal together / listen to each other / move forward as one."
+

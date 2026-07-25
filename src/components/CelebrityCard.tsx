@@ -1,5 +1,5 @@
 import React from 'react';
-import { TOPICS, type GeneratedPost } from '../utils/topics';
+import { type GeneratedPost } from '../utils/topics';
 
 interface CelebrityCardProps {
   post: GeneratedPost | null;
@@ -8,28 +8,34 @@ interface CelebrityCardProps {
   isDark?: boolean;
 }
 
-const getCaption = (topicId: string) => {
-  const topic = TOPICS.find((t) => t.id === topicId);
-  const icon = topic?.icon || '✨';
-  
-  const phrases = [
-    'minimum effort',
-    'bare minimum',
-    'minimum vibes',
-    'minimum energy',
-    'minimum stance',
-    'minimum take'
-  ];
-  
-  const index = topicId.charCodeAt(0) % phrases.length;
-  const phrase = phrases[index];
-  
-  const apathyEmojis = ['😑', '🤐', '🥱', '🤷', '🤍', '📉', '🔋', '🧱', '🕊️'];
-  const emojiIndex = (topicId.charCodeAt(topicId.length - 1) || 0) % apathyEmojis.length;
-  const secondaryEmoji = apathyEmojis[emojiIndex];
-  
-  return `${phrase} ${icon}${secondaryEmoji}`;
-};
+
+/**
+ * Renders content that may contain \n\n paragraph breaks as separate <p> elements.
+ */
+function renderParagraphs(
+  text: string,
+  style: React.CSSProperties
+): React.ReactNode {
+  const paras = text.split('\n\n').filter(Boolean);
+  if (paras.length === 1) {
+    return <p style={{ ...style, margin: 0 }}>{text}</p>;
+  }
+  return (
+    <>
+      {paras.map((para, i) => (
+        <p
+          key={i}
+          style={{
+            ...style,
+            margin: i < paras.length - 1 ? '0 0 12px 0' : '0',
+          }}
+        >
+          {para}
+        </p>
+      ))}
+    </>
+  );
+}
 
 export const CelebrityCard: React.FC<CelebrityCardProps> = ({
   post,
@@ -56,7 +62,7 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
     );
   }
 
-  const { content, likes } = post;
+  const { content, likes, authorName, authorHandle, avatarUrl, avatarText } = post;
 
   // Vivid Satire Color Tokens based on Theme
   const themeColors = {
@@ -112,9 +118,23 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
           fontWeight: 800,
           fontSize: '14px',
           letterSpacing: '0.5px',
-          flexShrink: 0
+          flexShrink: 0,
+          overflow: 'hidden'
         }}>
-          NV
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt={authorName || 'Profile Icon'}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                borderRadius: '50%'
+              }}
+            />
+          ) : (
+            avatarText || 'NV'
+          )}
         </div>
         <div style={{
           marginLeft: '12px',
@@ -133,8 +153,9 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
               textTransform: 'uppercase',
               letterSpacing: '0.5px',
               color: themeColors.text
-            }}>Neutral Voice</span>
+            }}>{authorName || 'Neutral Voice'}</span>
             <svg
+              xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               style={{
                 width: '14px',
@@ -145,13 +166,13 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
                 verticalAlign: 'middle'
               }}
             >
-              <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.99-3.818-3.99-.48 0-.94.1-1.348.27C14.825 2.515 13.512 1.5 12 1.5s-2.825 1.015-3.422 2.28c-.408-.17-.868-.27-1.348-.27-2.108 0-3.818 1.78-3.818 3.99 0 .495.084.965.238 1.4-1.273.65-2.148 2.02-2.148 3.6 0 1.58.875 2.95 2.148 3.6-.154.435-.238.905-.238 1.4 0 2.21 1.71 3.99 3.818 3.99.48 0 .94-.1 1.348-.27.597 1.265 1.91 2.28 3.422 2.28s2.825-1.015 3.422-2.28c.408.17.868.27 1.348.27 2.108 0 3.818-1.78 3.818-3.99 0-.495-.084-.965-.238-1.4 1.273-.65 2.148-2.02 2.148-3.6zm-12.72 4.43l-3.23-3.23 1.42-1.42 1.81 1.81 5.23-5.23 1.42 1.42-6.65 6.65z" />
+              <path fill={themeColors.primary} d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.99-3.818-3.99-.48 0-.94.1-1.348.27C14.825 2.515 13.512 1.5 12 1.5s-2.825 1.015-3.422 2.28c-.408-.17-.868-.27-1.348-.27-2.108 0-3.818 1.78-3.818 3.99 0 .495.084.965.238 1.4-1.273.65-2.148 2.02-2.148 3.6 0 1.58.875 2.95 2.148 3.6-.154.435-.238.905-.238 1.4 0 2.21 1.71 3.99 3.818 3.99.48 0 .94-.1 1.348-.27.597 1.265 1.91 2.28 3.422 2.28s2.825-1.015 3.422-2.28c.408.17.868.27 1.348.27 2.108 0 3.818-1.78 3.818-3.99 0-.495-.084-.965-.238-1.4 1.273-.65 2.148-2.02 2.148-3.6zm-12.72 4.43l-3.23-3.23 1.42-1.42 1.81 1.81 5.23-5.23 1.42 1.42-6.65 6.65z" />
             </svg>
           </div>
           <span style={{
             fontSize: '12px',
             color: themeColors.subText
-          }}>@the_neutral_take</span>
+          }}>{authorHandle || '@the_neutral_take'}</span>
         </div>
         <button style={{
           marginLeft: 'auto',
@@ -163,8 +184,8 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
           alignItems: 'center',
           padding: 0
         }}>
-          <svg viewBox="0 0 24 24" style={{ width: '20px', height: '20px', fill: 'currentColor' }}>
-            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style={{ width: '20px', height: '20px', fill: themeColors.subText }}>
+            <path fill={themeColors.subText} d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
           </svg>
         </button>
       </div>
@@ -176,52 +197,79 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
       }}>
         {platform === 'instagram' ? (
           <>
-            <div style={{
-              marginLeft: '-16px',
-              marginRight: '-16px',
-              marginBottom: '16px',
-              aspectRatio: '1 / 1',
-              backgroundColor: '#faf8f2', // Warm white/light yellow paper background
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottom: `1px solid ${themeColors.border}`,
-              overflow: 'hidden',
-              boxSizing: 'border-box',
-              padding: '40px 30px',
-              textAlign: 'center'
-            }}>
-              <span style={{
-                fontSize: '48px',
-                lineHeight: '1',
-                fontFamily: 'Georgia, serif',
-                fontWeight: 'bold',
-                color: '#8b8678', // Muted gold/warm grey quote mark
-                marginBottom: '8px',
-                opacity: 0.8
-              }}>
-                “
-              </span>
-              <p style={{
+            {/* Compute layout properties based on content length */}
+            {(() => {
+              const len = content.length;
+              // Font size: scales from 17px (short) down to 10px (very long)
+              const fontSize = len <= 100 ? 17
+                : len <= 200 ? 15
+                : len <= 300 ? 13
+                : len <= 450 ? 11.5
+                : 10.5;
+              // Padding: tighter for longer text
+              const padV = len <= 150 ? 36 : len <= 300 ? 26 : 18;
+              const padH = len <= 150 ? 28 : len <= 350 ? 22 : 18;
+              // Hide decorative " and _ framing when text is long
+              const showFrame = len <= 200;
+
+              const textStyle: React.CSSProperties = {
                 margin: 0,
-                fontSize: '18px',
-                lineHeight: 1.5,
-                fontWeight: 600,
-                fontFamily: "Georgia, 'Times New Roman', serif", // Elegant serif plain text
-                color: '#2d2b27', // warm dark grey/brown-black
+                fontSize: `${fontSize}px`,
+                lineHeight: 1.6,
+                fontWeight: showFrame ? 600 : 500,
+                fontFamily: showFrame
+                  ? "Georgia, 'Times New Roman', serif"
+                  : "'Plus Jakarta Sans', Inter, sans-serif",
+                color: showFrame ? '#2d2b27' : '#f0ece4',
                 wordBreak: 'break-word',
-                maxWidth: '90%'
-              }}>
-                {content}
-              </p>
-              <div style={{
-                marginTop: '16px',
-                width: '32px',
-                height: '1px',
-                backgroundColor: '#dcd8cd', // thin minimal separator line
-              }}></div>
-            </div>
+                width: '100%',
+                letterSpacing: showFrame ? '0' : '0.01em',
+              };
+
+              return (
+                <div style={{
+                  marginLeft: '-16px',
+                  marginRight: '-16px',
+                  marginBottom: '16px',
+                  aspectRatio: '1 / 1',
+                  background: showFrame
+                    ? '#faf8f2'
+                    : 'linear-gradient(145deg, #1a0a10 0%, #0a1a1c 100%)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                  borderBottom: `1px solid ${themeColors.border}`,
+                  overflow: 'hidden',
+                  boxSizing: 'border-box',
+                  padding: `${padV}px ${padH}px`,
+                  textAlign: 'left',
+                }}>
+                  {showFrame && (
+                    <span style={{
+                      fontSize: '44px',
+                      lineHeight: '1',
+                      fontFamily: 'Georgia, serif',
+                      fontWeight: 'bold',
+                      color: '#8b8678',
+                      marginBottom: '6px',
+                      opacity: 0.8,
+                    }}>
+                      "
+                    </span>
+                  )}
+                  {renderParagraphs(content, textStyle)}
+                  {showFrame && (
+                    <div style={{
+                      marginTop: '14px',
+                      width: '32px',
+                      height: '1px',
+                      backgroundColor: '#dcd8cd',
+                    }} />
+                  )}
+                </div>
+              );
+            })()}
             <p style={{
               fontSize: '14px',
               lineHeight: 1.45,
@@ -229,20 +277,20 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
               margin: '0 0 12px 0',
               fontStyle: 'italic'
             }}>
-              {getCaption(post.topicId)}
+              {post.caption}
             </p>
           </>
         ) : (
           <div style={{ margin: '6px 0 16px 0' }}>
-            <p style={{
-              fontSize: '20px',
+            {renderParagraphs(content, {
+              fontSize: content.length <= 150 ? '20px'
+                : content.length <= 300 ? '17px'
+                : content.length <= 450 ? '15px'
+                : '13px',
               fontWeight: 700,
-              lineHeight: 1.35,
+              lineHeight: 1.45,
               color: themeColors.text,
-              margin: 0
-            }}>
-              {content}
-            </p>
+            })}
           </div>
         )}
       </div>
@@ -271,8 +319,8 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
             color: themeColors.text,
             cursor: 'pointer'
           }}>
-            <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}>
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: themeColors.text }}>
+              <path fill={themeColors.text} d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
             <span style={{
               fontSize: '12px',
@@ -289,8 +337,8 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
             color: themeColors.text,
             cursor: 'pointer'
           }}>
-            <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}>
-              <path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: themeColors.text }}>
+              <path fill={themeColors.text} d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z" />
             </svg>
           </button>
           <button style={{
@@ -302,8 +350,8 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
             color: themeColors.text,
             cursor: 'pointer'
           }}>
-            <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}>
-              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: themeColors.text }}>
+              <path fill={themeColors.text} d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
             </svg>
           </button>
         </div>
@@ -316,8 +364,8 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
           display: 'flex',
           alignItems: 'center'
         }}>
-          <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}>
-            <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: themeColors.text }}>
+            <path fill={themeColors.text} d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" />
           </svg>
         </button>
       </div>

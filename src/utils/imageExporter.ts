@@ -11,12 +11,17 @@ export async function exportElementAsPng(
   height: number
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    // 1. Extract the outer HTML of the element to export
-    const outerHtml = element.outerHTML;
+    const padding = 24;
+    const canvasWidth = width + padding * 2;
+    const canvasHeight = height + padding * 2;
+
+    // 1. Extract the outer HTML of the element and ensure all inner SVGs declare the SVG namespace
+    let outerHtml = element.outerHTML;
+    outerHtml = outerHtml.replace(/<svg(?![^>]*xmlns=)/gi, '<svg xmlns="http://www.w3.org/2000/svg"');
 
     // 2. Construct valid XHTML wrapping the element
     const svgContent = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasHeight}">
         <foreignObject width="100%" height="100%">
           <div xmlns="http://www.w3.org/1999/xhtml" style="
             width: 100%;
@@ -26,10 +31,10 @@ export async function exportElementAsPng(
             justify-content: center;
             background: transparent;
             box-sizing: border-box;
-            padding: 24px;
+            padding: ${padding}px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           ">
-            <div style="width: 100%;">
+            <div style="width: ${width}px; height: ${height}px;">
               ${outerHtml}
             </div>
           </div>
@@ -47,10 +52,11 @@ export async function exportElementAsPng(
     img.src = imgSource;
 
     img.onload = () => {
-      // 5. Draw the image onto a Canvas element
+      // 5. Draw the image onto a Canvas element with 2x resolution scaling for high-DPI clarity
+      const scale = 2;
       const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
+      canvas.width = canvasWidth * scale;
+      canvas.height = canvasHeight * scale;
 
       const ctx = canvas.getContext('2d');
       if (!ctx) {
@@ -59,10 +65,10 @@ export async function exportElementAsPng(
       }
 
       // Ensure canvas starts clean and transparent
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Render the loaded SVG image to the canvas
-      ctx.drawImage(img, 0, 0, width, height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
       try {
         // 6. Generate the PNG data URL

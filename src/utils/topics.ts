@@ -1,9 +1,53 @@
 import { createGrammar } from './tracery';
+import profilesConfig from '../assets/profiles/profiles.json';
+
+// Dynamically import all profile avatar images placed in src/assets/profiles/
+const avatarModules = import.meta.glob<{ default: string }>(
+  '../assets/profiles/*.{png,jpg,jpeg,webp,svg}',
+  { eager: true }
+);
+
+// Map avatar filenames (e.g. "avatar1.png" and "avatar1") to resolved URLs
+const avatarMap: Record<string, string> = {};
+const avatarUrlList: string[] = [];
+
+Object.entries(avatarModules).forEach(([filepath, mod]) => {
+  const url = typeof mod === 'string' ? mod : mod.default;
+  avatarUrlList.push(url);
+
+  const filename = filepath.split('/').pop() || '';
+  if (filename) {
+    avatarMap[filename.toLowerCase()] = url;
+    const basename = filename.replace(/\.[^/.]+$/, '');
+    avatarMap[basename.toLowerCase()] = url;
+  }
+});
+
+interface ProfileDefinition {
+  name: string;
+  handle: string;
+  avatar?: string;
+}
+
+const availableProfiles: ProfileDefinition[] =
+  profilesConfig.profiles && profilesConfig.profiles.length > 0
+    ? (profilesConfig.profiles as ProfileDefinition[])
+    : [{ name: 'Neutral Voice', handle: '@the_neutral_take', avatar: 'avatar1.png' }];
+
+function getInitials(name: string): string {
+  const words = name.trim().split(/\s+/);
+  if (words.length >= 2) {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase();
+}
 
 export interface TopicDefinition {
   id: string;
   label: string;
   icon: string;
+  /** Ordered list of apathy style IDs that best fit this topic (drawn from topics.md angles). */
+  preferredStyles: string[];
   vocabulary: {
     noun: string;
     stance_a: string;
@@ -26,10 +70,12 @@ export interface GeneratedPost {
   activeStyles: string[];
   authorName: string;
   authorHandle: string;
+  avatarUrl?: string;
   verified: 'blue' | 'gold' | 'none';
   avatarGradient: string[];
   avatarText: string;
   content: string;
+  caption: string;
   timestamp: string;
   likes: string;
   retweets: string;
@@ -41,6 +87,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'genocide-ethnic-cleansing',
     label: 'Genocide and ethnic cleansing',
     icon: '🕊️',
+    preferredStyles: ['transcendentalist', 'centrist', 'deflector', 'sanitizer', 'burnout', 'filibuster'],
     vocabulary: {
       noun: 'global conflicts and ethnic violence',
       stance_a: 'national sovereignty and defense policy',
@@ -55,6 +102,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'climate-change',
     label: 'Climate change and global warming',
     icon: '🌍',
+    preferredStyles: ['transcendentalist', 'centrist', 'hyperlocal', 'proxy', 'burnout', 'aesthetic'],
     vocabulary: {
       noun: 'climate change and rising global temperatures',
       stance_a: 'economic growth and energy industry needs',
@@ -69,6 +117,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'student-protests',
     label: 'Student protests and free speech',
     icon: '📣',
+    preferredStyles: ['transcendentalist', 'centrist', 'bureaucrat', 'deflector', 'meta', 'aesthetic'],
     vocabulary: {
       noun: 'student demonstrations and campus unrest',
       stance_a: 'public safety and institutional rules',
@@ -83,6 +132,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'income-inequality',
     label: 'Income inequality and wealth tax',
     icon: '📊',
+    preferredStyles: ['transcendentalist', 'centrist', 'hyperlocal', 'filibuster', 'meta', 'philanthropist'],
     vocabulary: {
       noun: 'income inequality and systemic poverty',
       stance_a: 'free market growth and corporate investment',
@@ -97,6 +147,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'reproductive-rights',
     label: 'Reproductive rights and abortion access',
     icon: '🏥',
+    preferredStyles: ['transcendentalist', 'centrist', 'proxy', 'bureaucrat', 'burnout', 'victim'],
     vocabulary: {
       noun: 'reproductive healthcare and abortion access',
       stance_a: 'legal guidelines and local regulations',
@@ -111,6 +162,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'lgbtq-rights',
     label: 'LGBTQ+ rights and trans healthcare',
     icon: '🌈',
+    preferredStyles: ['transcendentalist', 'centrist', 'selective', 'meta', 'armored', 'aesthetic'],
     vocabulary: {
       noun: 'transgender healthcare and LGBTQ+ rights',
       stance_a: 'institutional rules and sports guidelines',
@@ -125,6 +177,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'police-brutality',
     label: 'Police brutality and reform',
     icon: '⚖️',
+    preferredStyles: ['transcendentalist', 'centrist', 'reposter', 'bureaucrat', 'burnout', 'aesthetic'],
     vocabulary: {
       noun: 'law enforcement methods and policing practices',
       stance_a: 'officer support and public safety policies',
@@ -139,6 +192,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'gun-control',
     label: 'Gun control and firearm regulation',
     icon: '🔫',
+    preferredStyles: ['transcendentalist', 'centrist', 'deflector', 'meta', 'philanthropist', 'bureaucrat'],
     vocabulary: {
       noun: 'gun ownership laws and weapon regulations',
       stance_a: 'second amendment rights and self-defense',
@@ -153,6 +207,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'systemic-racism',
     label: 'Systemic racism and criminal justice reform',
     icon: '✊',
+    preferredStyles: ['transcendentalist', 'centrist', 'reposter', 'philanthropist', 'victim', 'proxy'],
     vocabulary: {
       noun: 'systemic bias and criminal justice disparities',
       stance_a: 'legal consistency and public order standards',
@@ -167,6 +222,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'refugee-crises',
     label: 'Refugee crises and asylum policies',
     icon: '⛵',
+    preferredStyles: ['transcendentalist', 'centrist', 'selective', 'philanthropist', 'filibuster', 'deflector'],
     vocabulary: {
       noun: 'border crossings and refugee asylum policies',
       stance_a: 'national border enforcement and legal limits',
@@ -181,6 +237,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'private-jets',
     label: 'Private jet usage and carbon footprints',
     icon: '🛩️',
+    preferredStyles: ['transcendentalist', 'centrist', 'hyperlocal', 'burnout', 'victim', 'proxy'],
     vocabulary: {
       noun: 'private aviation emissions and executive travel',
       stance_a: 'travel efficiency and executive productivity',
@@ -195,6 +252,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'caste-discrimination',
     label: 'Caste-based discrimination and reservation policies',
     icon: '🏢',
+    preferredStyles: ['transcendentalist', 'centrist', 'deflector', 'philanthropist', 'meta', 'bureaucrat'],
     vocabulary: {
       noun: 'caste-based discrimination and reservation policies',
       stance_a: 'meritocracy standards and administrative ease',
@@ -209,6 +267,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'communal-harmony',
     label: 'Communal harmony and religious polarization',
     icon: '🛕',
+    preferredStyles: ['transcendentalist', 'centrist', 'selective', 'victim', 'aesthetic', 'filibuster'],
     vocabulary: {
       noun: 'religious polarization and communal relations',
       stance_a: 'secular policy enforcement and public stability',
@@ -223,6 +282,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'farmers-rights',
     label: 'Farmers\' rights and agricultural sector reforms',
     icon: '🚜',
+    preferredStyles: ['transcendentalist', 'centrist', 'hyperlocal', 'deflector', 'victim', 'philanthropist'],
     vocabulary: {
       noun: 'agricultural market reforms and crop pricing',
       stance_a: 'modernized market policies and agribusiness investment',
@@ -237,6 +297,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'press-freedom',
     label: 'Press freedom and media independence',
     icon: '📰',
+    preferredStyles: ['transcendentalist', 'centrist', 'bureaucrat', 'deflector', 'filibuster', 'aesthetic'],
     vocabulary: {
       noun: 'media independence and journalism safety',
       stance_a: 'national safety laws and regulation of reports',
@@ -251,6 +312,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'sedition-laws',
     label: 'Sedition laws and freedom of speech',
     icon: '🔒',
+    preferredStyles: ['transcendentalist', 'centrist', 'bureaucrat', 'aesthetic', 'victim', 'meta'],
     vocabulary: {
       noun: 'sedition charges and speech restrictions',
       stance_a: 'state stability and public order enforcement',
@@ -265,6 +327,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'ucc-implementation',
     label: 'UCC (Uniform Civil Code) implementation',
     icon: '📜',
+    preferredStyles: ['transcendentalist', 'centrist', 'deflector', 'filibuster', 'bureaucrat', 'burnout'],
     vocabulary: {
       noun: 'uniform civil code and personal laws',
       stance_a: 'legal standardization and gender equality codes',
@@ -279,6 +342,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'womens-safety',
     label: 'Women\'s safety and gender-based violence',
     icon: '🛡️',
+    preferredStyles: ['transcendentalist', 'centrist', 'reposter', 'philanthropist', 'victim', 'aesthetic'],
     vocabulary: {
       noun: 'gender-based violence and safety measures',
       stance_a: 'police presence and stricter penal codes',
@@ -293,6 +357,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'youth-unemployment',
     label: 'Employment challenges and youth unemployment',
     icon: '🎓',
+    preferredStyles: ['transcendentalist', 'centrist', 'deflector', 'hyperlocal', 'proxy', 'philanthropist'],
     vocabulary: {
       noun: 'youth unemployment and lack of job options',
       stance_a: 'skills training and business-friendly tax policies',
@@ -307,6 +372,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'air-pollution',
     label: 'Air pollution and urban climate crises',
     icon: '🌫️',
+    preferredStyles: ['transcendentalist', 'centrist', 'hyperlocal', 'proxy', 'burnout', 'filibuster'],
     vocabulary: {
       noun: 'air pollution and urban smog crises',
       stance_a: 'phased transit updates and economic protections',
@@ -321,6 +387,7 @@ export const TOPICS: TopicDefinition[] = [
     id: 'electoral-funding',
     label: 'Manipulative election funding and electoral transparency',
     icon: '🗳️',
+    preferredStyles: ['transcendentalist', 'centrist', 'deflector', 'bureaucrat', 'selective', 'meta'],
     vocabulary: {
       noun: 'electoral spending and funding transparency',
       stance_a: 'donor privacy rights and fundraising ease',
@@ -352,6 +419,7 @@ export const APATHY_STYLES: ApathyStyleDefinition[] = [
   { id: 'proxy', name: 'The Corporate Outsource / Brand Proxy' },
   { id: 'armored', name: 'Therapeutic Jargon Armoring' },
   { id: 'meta', name: 'The "Both Extremes Are the Real Problem" Meta-Critique' },
+  { id: 'formula', name: 'The Four-Box Modular Statement (PenPencilDraw Matrix)' },
 ];
 
 // Unified Tracery Grammar Database
@@ -612,11 +680,163 @@ const BASE_GRAMMAR = {
   meta_stance: [
     "the social media discourse around #noun# is too combative. People are fighting over #stance_a# vs #stance_b# instead of focusing on civil dialogue."
   ],
+
+  // ── Short stances for multi-style blending (50-80 chars each) ──────────────
+  // Used when combining 2 or 3 styles so the result stays under the char limit.
+
+  transcendentalist_stance_short: [
+    "sending love to all sides of this 🌿",
+    "the universe will balance it — I trust the process. 🧘‍♀️",
+    "both perspectives deserve healing energy. 🤍"
+  ],
+  centrist_stance_short: [
+    "both sides have a point, honestly.",
+    "I see merit in every perspective here.",
+    "the truth is somewhere in the middle. 🕊️"
+  ],
+  deflector_stance_short: [
+    "I'm just an artist — not a policy expert.",
+    "please do your own research on this. 📚",
+    "nobody should take my take seriously."
+  ],
+  distractor_stance_short: [
+    "anyway, #personal_pivot# drops soon! 🎉",
+    "speaking of which — check my bio link! ✨",
+    "exciting personal news coming very soon!"
+  ],
+  cynic_stance_short: [
+    "caring about this in 2026 is giving so much. 🙄",
+    "it's not that deep, honestly.",
+    "chronically online behavior. 🤡"
+  ],
+  sanitizer_stance_short: [
+    "We stand with all communities. 🖤",
+    "Hate has no home here.",
+    "Violence is unacceptable, full stop."
+  ],
+  burnout_stance_short: [
+    "this is draining my energy. I need space. 🔋",
+    "taking time to protect my peace.",
+    "the headlines alone are overwhelming me."
+  ],
+  selective_stance_short: [
+    "focusing on #local_work# instead. 🌱",
+    "real change starts locally.",
+    "let's talk about something we can all agree on."
+  ],
+  reposter_stance_short: [
+    "sharing for awareness only. [No comment.]",
+    "just a repost — make of it what you will.",
+    "forwarding this. Post expires in 24h."
+  ],
+  philanthropist_stance_short: [
+    "I donate quietly — no need for a post.",
+    "my foundation does the work. 💳",
+    "action over words, always."
+  ],
+  aesthetic_stance_short: [
+    "my art says what I can't. 🎨",
+    "the work is the statement.",
+    "find your own meaning in #art_metaphor#."
+  ],
+  filibuster_stance_short: [
+    "the full facts aren't in yet.",
+    "I'm waiting for more clarity before commenting.",
+    "more analysis is needed. Wait for the report."
+  ],
+  victim_stance_short: [
+    "demanding my opinion is harassment. 🚫",
+    "I'm a person, not a position paper.",
+    "respect my boundaries on this."
+  ],
+  bureaucrat_stance_short: [
+    "my team has advised me not to comment.",
+    "contractually, I genuinely can't say more.",
+    "PR guidelines require I stay neutral."
+  ],
+  hyperlocal_stance_short: [
+    "my bandwidth is full with local causes. 🏡",
+    "I focus where I can make a real difference.",
+    "#local_work# is where I put my energy."
+  ],
+  proxy_stance_short: [
+    "the brand collab speaks for itself. ♻️",
+    "our sponsor's campaign says it all.",
+    "partnered content incoming — stay tuned. 🤝"
+  ],
+  armored_stance_short: [
+    "this is a violation of my peace. 🛡️",
+    "protecting my boundaries.",
+    "toxic energy blocked."
+  ],
+  meta_stance_short: [
+    "the discourse around this is just too toxic.",
+    "everyone needs to lower the temperature.",
+    "the polarization IS the real problem."
+  ],
+
+  // 19. FORMULA (PenPencilDraw Matrix)
+  formula_intro: [
+    "A statement regarding recent developments:",
+    "Thinking deeply about recent events...",
+    "In moments like these, words are difficult, but:",
+    "Addressing everything happening right now:"
+  ],
+  formula_outro: [
+    "Sending light and hope. 🕊️",
+    "With love and unity. 🤍",
+    "Let's choose empathy over division. ✨"
+  ],
+  formula_stance: [
+    "my heart goes out to #formula_target#. This is #formula_situation#. We must remember #formula_principle#, and I'm sure we can #formula_resolution#."
+  ],
+  formula_target: [
+    "the students",
+    "our youth",
+    "the country's future",
+    "everyone affected",
+    "everyone impacted by #noun#",
+    "all communities navigating #concept#"
+  ],
+  formula_situation: [
+    "a difficult time for us all",
+    "a reminder of what's at stake",
+    "a moment that needs maturity",
+    "a time to reflect, not divide",
+    "a complex moment for our shared #concept#"
+  ],
+  formula_principle: [
+    "there are no easy answers",
+    "every voice matters",
+    "humanity comes first",
+    "this is a complex issue",
+    "taking extreme stances on #noun# helps no one"
+  ],
+  formula_resolution: [
+    "find common ground",
+    "heal together",
+    "listen to each other",
+    "move forward as one",
+    "build bridges through mutual respect"
+  ],
+  formula_stance_short: [
+    "my heart goes out to everyone affected — humanity comes first. 🤍",
+    "this is a time to reflect, not divide. I'm sure we can find common ground. 🕊️",
+    "there are no easy answers, but every voice matters."
+  ],
 };
 
 // Generates a mock post based on selected topic
 export function generatePost(topicId: string): GeneratedPost {
   const topic = TOPICS.find((t) => t.id === topicId) || TOPICS[0];
+
+  // Build the pool of styles to draw from: use the topic's preferred styles
+  // mapped back to full ApathyStyleDefinition objects, falling back to the
+  // full APATHY_STYLES list if a preferred id is somehow not found.
+  const topicStylePool: ApathyStyleDefinition[] = topic.preferredStyles
+    .map(id => APATHY_STYLES.find(s => s.id === id))
+    .filter((s): s is ApathyStyleDefinition => s !== undefined);
+  const effectivePool = topicStylePool.length > 0 ? topicStylePool : APATHY_STYLES;
 
   let content = '';
   let chosenStyles: ApathyStyleDefinition[] = [];
@@ -625,44 +845,29 @@ export function generatePost(topicId: string): GeneratedPost {
   while (attempts < 50) {
     attempts++;
 
-    // Choose between 1 (min) and 3 (max) styles randomly
-    // If we've failed to get a short post, restrict to 1 style to keep the text short
-    const minStyles = 1;
-    const maxStyles = attempts > 10 ? 1 : 3;
-    const numStyles = Math.floor(Math.random() * (maxStyles - minStyles + 1)) + minStyles;
+    // Determine max styles based on retry count.
+    // We stay generous (up to 3 styles) for most of the loop;
+    // only the last 10 attempts force a guaranteed single-style output.
+    const maxStyles = attempts <= 40 ? 3 : 1;
+    const numStyles = Math.floor(Math.random() * maxStyles) + 1;
 
-    // Shuffle and select styles
-    let shuffled = [...APATHY_STYLES].sort(() => 0.5 - Math.random());
-    if (attempts > 45) {
-      // Force a short style to guarantee fitting under 200 chars
-      const shortStyles = APATHY_STYLES.filter(s => ['reposter', 'burnout', 'selective', 'distractor'].includes(s.id));
-      shuffled = shortStyles.sort(() => 0.5 - Math.random());
-    }
+    // Shuffle and select from the topic-specific pool
+    const shuffled = [...effectivePool].sort(() => 0.5 - Math.random());
     chosenStyles = shuffled.slice(0, numStyles);
-    
-    // Sort them so they always appear in the same order as in APATHY_STYLES
+
+    // Sort so styles always appear in canonical APATHY_STYLES order
     chosenStyles.sort((a, b) => {
       const idxA = APATHY_STYLES.findIndex((x) => x.id === a.id);
       const idxB = APATHY_STYLES.findIndex((x) => x.id === b.id);
       return idxA - idxB;
     });
 
-    let originTemplate = '#intro# #apathy# #outro#';
-    if (attempts > 40) {
-      originTemplate = '#apathy#';
-    } else if (attempts > 30) {
-      originTemplate = '#intro# #apathy#';
-    } else if (attempts > 20) {
-      originTemplate = '#apathy# #outro#';
-    }
-
     // Build grammar dynamically
     const localGrammar: any = {
       ...BASE_GRAMMAR,
-      origin: [originTemplate],
+      origin: ['#apathy#'], // overwritten below per style-count
       intro: [],
       outro: [],
-      // Inject topic vocabulary
       noun: [topic.vocabulary.noun],
       stance_a: [topic.vocabulary.stance_a],
       stance_b: [topic.vocabulary.stance_b],
@@ -672,45 +877,57 @@ export function generatePost(topicId: string): GeneratedPost {
       art_metaphor: [topic.vocabulary.art_metaphor]
     };
 
-    // Combine intros and outros into combined pools
+    // Collect intros / outros from chosen styles
     for (const style of chosenStyles) {
       localGrammar.intro.push(`#${style.id}_intro#`);
       localGrammar.outro.push(`#${style.id}_outro#`);
     }
 
-    // Combine apathy stances based on selected styles
+    // Build template + apathy content based on number of styles chosen.
+    //
+    // Style-count design:
+    //   1 style  → full stance in intro+stance+outro flow (richest, ~200-300 chars)
+    //   2 styles → two full stances as distinct paragraphs (paragraph-form, ~350-550 chars)
+    //   3 styles → three short stances as punchy fragments (compact variety, ~150-300 chars)
+    //
+    // \n\n between paragraphs so the card can render them separately.
     if (chosenStyles.length === 1) {
       const s1 = chosenStyles[0].id;
+      localGrammar.origin = ['#intro#\n\n#apathy#\n\n#outro#'];
       localGrammar.apathy = [`#${s1}_stance#`];
     } else if (chosenStyles.length === 2) {
       const s1 = chosenStyles[0].id;
       const s2 = chosenStyles[1].id;
+      // Two full-paragraph stances, with an intro lead-in
+      localGrammar.origin = ['#intro#\n\n#apathy#'];
       localGrammar.apathy = [
-        `#${s1}_stance# #${s2}_stance#`,
-        `#${s2}_stance# #${s1}_stance#`
+        `#${s1}_stance#\n\n#${s2}_stance#`,
+        `#${s2}_stance#\n\n#${s1}_stance#`
       ];
     } else {
+      // Three punchy short stances — variety over depth
       const s1 = chosenStyles[0].id;
       const s2 = chosenStyles[1].id;
       const s3 = chosenStyles[2].id;
+      localGrammar.origin = ['#intro#\n\n#apathy#'];
       localGrammar.apathy = [
-        `#${s1}_stance# #${s2}_stance# #${s3}_stance#`,
-        `#${s2}_stance# #${s3}_stance# #${s1}_stance#`,
-        `#${s3}_stance# #${s1}_stance# #${s2}_stance#`
+        `#${s1}_stance_short# #${s2}_stance_short# #${s3}_stance_short#`,
+        `#${s2}_stance_short# #${s3}_stance_short# #${s1}_stance_short#`,
+        `#${s3}_stance_short# #${s1}_stance_short# #${s2}_stance_short#`
       ];
     }
 
     const grammarCompiler = createGrammar(localGrammar);
     content = grammarCompiler.flatten('origin');
 
-    if (content.length <= 200) {
+    if (content.length <= 600) {
       break;
     }
   }
 
-  // Fallback truncation at word boundary if we still exceed 200 characters
-  if (content.length > 200) {
-    let truncated = content.substring(0, 197);
+  // Fallback truncation at word boundary if we still exceed 600 characters
+  if (content.length > 600) {
+    let truncated = content.substring(0, 597);
     const lastSpace = truncated.lastIndexOf(' ');
     if (lastSpace > 0) {
       truncated = truncated.substring(0, lastSpace);
@@ -729,6 +946,27 @@ export function generatePost(topicId: string): GeneratedPost {
     return num.toString();
   };
 
+  // Generate the instagram caption randomly at post-generation time
+  const captionPhrases = [
+    'minimum effort',
+    'bare minimum',
+    'minimum vibes',
+    'minimum energy',
+    'minimum stance',
+    'minimum take',
+    'neutral content',
+    'strategic silence',
+    'carefully crafted nothing',
+    'professionally undecided',
+    'diplomatically absent',
+    'peak non-commitment',
+  ];
+  const captionEmojis = ['😑', '🤐', '🥱', '🤷', '🤍', '📉', '🔋', '🧱', '🕊️', '🫥', '💅', '🪞', '🫠'];
+  const captionPhrase = captionPhrases[Math.floor(Math.random() * captionPhrases.length)];
+  const captionEmoji = captionEmojis[Math.floor(Math.random() * captionEmojis.length)];
+  const topicIcon = topic.icon;
+  const caption = `${captionPhrase} ${topicIcon}${captionEmoji}`;
+
   // Generate a realistic timestamp
   const date = new Date();
   const hours = date.getHours();
@@ -738,19 +976,52 @@ export function generatePost(topicId: string): GeneratedPost {
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const timestampStr = `${displayHours}:${minutes} ${ampm} · ${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 
+  // Pick random profile entry from profiles.json
+  const chosenProfile = availableProfiles[Math.floor(Math.random() * availableProfiles.length)];
+
+  // Match avatar image by filename/id specified in the profile entry
+  let chosenAvatarUrl: string | undefined = undefined;
+  if (chosenProfile.avatar) {
+    const key = chosenProfile.avatar.trim().toLowerCase();
+    chosenAvatarUrl = avatarMap[key];
+  }
+
+  // Fallback to random icon if specified avatar file wasn't found
+  if (!chosenAvatarUrl && avatarUrlList.length > 0) {
+    chosenAvatarUrl = avatarUrlList[Math.floor(Math.random() * avatarUrlList.length)];
+  }
+
+  const avatarText = getInitials(chosenProfile.name);
+
   return {
     id: Math.random().toString(36).substring(2, 9),
     topicId,
     activeStyles: chosenStyles.map((style) => style.name),
-    authorName: 'Neutral Voice',
-    authorHandle: '@the_neutral_take',
+    authorName: chosenProfile.name,
+    authorHandle: chosenProfile.handle,
+    avatarUrl: chosenAvatarUrl,
     verified: 'blue',
     avatarGradient: ['#ba0035', '#006970'],
-    avatarText: 'NV',
+    avatarText,
     content,
+    caption,
     timestamp: timestampStr,
     likes: formatNum(likesNum),
     retweets: formatNum(retweetsNum),
     views: formatNum(viewsNum),
   };
 }
+
+/** Fisher-Yates shuffle helper */
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/** Randomized topics list for the session */
+export const SHUFFLED_TOPICS: TopicDefinition[] = shuffleArray(TOPICS);
+
