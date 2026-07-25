@@ -82,6 +82,7 @@ function App() {
       setPngDataUrl(dataUrl);
     } catch (err) {
       console.error('Error generating image:', err);
+      setPngDataUrl('ERROR');
     } finally {
       setIsExporting(false);
     }
@@ -99,29 +100,34 @@ function App() {
         {view === 'home' ? (
           /* HOME SCREEN VIEW */
           <>
-            <header className="app-header">
-              <div className="brand-wrapper">
-                <div className="logo-box">
-                  <span className="material-symbols-outlined">auto_awesome</span>
-                </div>
-                <h1 className="logo-title">Celebrity Fence Sitter</h1>
-              </div>
-              <button
-                onClick={toggleTheme}
-                className="icon-btn"
-                title="Toggle Theme"
-              >
-                <span className="material-symbols-outlined">
-                  {theme === 'dark' ? 'light_mode' : 'dark_mode'}
-                </span>
-              </button>
-            </header>
+            {/* Floating Theme Switcher */}
+            <button
+              onClick={toggleTheme}
+              className="icon-btn float-theme-btn"
+              title="Toggle Theme"
+            >
+              <span className="material-symbols-outlined">
+                {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+              </span>
+            </button>
 
             <main className="scroll-view">
-              <div className="welcome-section">
-                <h2 className="headline-apathy">
-                  apathy <span>as a service</span>
-                </h2>
+              <div className="pop-welcome-container">
+                {/* Floating Pop Accents */}
+                <div className="pop-floating-emoji emoji-top-left" title="Smirk">😏</div>
+                <div className="pop-floating-emoji emoji-top-right" title="Unimpressed">😒</div>
+                <div className="pop-floating-emoji emoji-bottom-left" title="Neutral">😑</div>
+                <div className="pop-floating-emoji emoji-bottom-right" title="Smirk">😏</div>
+                <div className="pop-floating-star star-left">⭐</div>
+                <div className="pop-floating-star star-right">🌟</div>
+
+                <div className="pop-main-title">
+                  <span className="pop-title-line1">Celebrity</span>
+                  <span className="pop-title-line2">Fence Sitter</span>
+                </div>
+                <div className="pop-subtitle-badge">
+                  Apathy as a Service
+                </div>
                 <p className="subtitle-desc">
                   Say everything. Mean nothing. Stay on brand.
                 </p>
@@ -262,21 +268,26 @@ function App() {
 
               {currentPost && currentPost.activeStyles && (
                 <div style={{
-                  padding: '12px 16px',
+                  padding: '14px 16px',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '8px',
                   alignItems: 'center',
                   boxSizing: 'border-box',
                   width: '100%',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  backgroundColor: theme === 'dark' ? '#1e1233' : '#ffffff',
+                  border: '3px solid #181028',
+                  borderRadius: '16px',
+                  boxShadow: '4px 4px 0px #181028'
                 }}>
                   <span style={{
-                    fontSize: '11px',
+                    fontFamily: 'Fredoka, sans-serif',
+                    fontSize: '12px',
                     fontWeight: 800,
                     textTransform: 'uppercase',
                     letterSpacing: '0.08em',
-                    color: theme === 'dark' ? '#e5bdbe' : '#5c3f41',
+                    color: theme === 'dark' ? '#ffd600' : '#181028',
                   }}>
                     Performative Apathy Blend
                   </span>
@@ -291,15 +302,15 @@ function App() {
                         key={idx}
                         style={{
                           fontSize: '11px',
-                          fontWeight: 700,
-                          padding: '4px 10px',
+                          fontWeight: 800,
+                          padding: '4px 12px',
                           borderRadius: '9999px',
-                          backgroundColor: theme === 'dark' ? 'rgba(186, 0, 53, 0.12)' : 'rgba(186, 0, 53, 0.05)',
-                          border: `1px solid ${theme === 'dark' ? 'rgba(186, 0, 53, 0.3)' : 'rgba(186, 0, 53, 0.15)'}`,
-                          color: '#ba0035',
+                          backgroundColor: '#ff2a85',
+                          border: '2px solid #181028',
+                          color: '#ffffff',
                           whiteSpace: 'normal',
                           textAlign: 'center',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+                          boxShadow: '2px 2px 0px #181028'
                         }}
                       >
                         {styleName}

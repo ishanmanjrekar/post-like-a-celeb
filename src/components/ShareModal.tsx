@@ -96,6 +96,17 @@ export const ShareModal: React.FC<ShareModalProps> = ({
     setTimeout(() => setShowInstaTip(false), 5000);
   };
 
+  // Keyboard Escape key support to close modal
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -117,7 +128,10 @@ export const ShareModal: React.FC<ShareModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
             style={{
               position: 'absolute',
               top: 0,
@@ -126,7 +140,8 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               height: '100%',
               background: 'rgba(12, 8, 20, 0.85)',
               backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)'
+              WebkitBackdropFilter: 'blur(20px)',
+              cursor: 'pointer'
             }}
           />
 
@@ -138,15 +153,15 @@ export const ShareModal: React.FC<ShareModalProps> = ({
             transition={{ type: 'spring', damping: 25, stiffness: 350 }}
             style={{
               position: 'relative',
-              background: 'var(--color-surface-container-lowest)',
-              border: '1px solid var(--color-outline-variant)',
+              background: '#ffffff',
+              border: '3.5px solid #181028',
               borderRadius: '24px',
               padding: '28px 24px',
               maxWidth: '380px',
               width: '100%',
               boxSizing: 'border-box',
-              boxShadow: 'var(--shadow-diffused)',
-              color: 'var(--color-on-surface)',
+              boxShadow: '8px 8px 0px #181028',
+              color: '#181028',
               textAlign: 'center',
               display: 'flex',
               flexDirection: 'column',
@@ -154,41 +169,51 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               maxHeight: '90vh',
               overflowY: 'auto',
               scrollbarWidth: 'none',
-              fontFamily: "'Plus Jakarta Sans', sans-serif"
+              fontFamily: "'Outfit', 'Fredoka', sans-serif"
             }}
           >
             {/* Close Button */}
             <button
-              onClick={onClose}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose();
+              }}
               style={{
                 position: 'absolute',
                 top: '16px',
                 right: '16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid var(--color-outline-variant)',
-                width: '32px',
-                height: '32px',
+                zIndex: 50,
+                background: '#ffd600',
+                border: '2.5px solid #181028',
+                boxShadow: '2px 2px 0px #181028',
+                width: '36px',
+                height: '36px',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'var(--color-on-surface-variant)',
+                color: '#181028',
                 cursor: 'pointer',
                 fontSize: '18px',
-                transition: 'background 0.2s'
+                fontWeight: 900,
+                transition: 'transform 0.1s',
+                pointerEvents: 'auto'
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-surface-container-high)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; }}
             >
               ✕
             </button>
 
             <h3 style={{
               margin: '0 0 4px 0',
-              fontSize: '22px',
+              fontFamily: 'Fredoka, sans-serif',
+              fontSize: '24px',
               fontWeight: 800,
-              letterSpacing: '-0.5px',
-              color: 'var(--color-primary)'
+              letterSpacing: '-0.3px',
+              color: '#ff2a85',
+              WebkitTextStroke: '1px #ffffff',
+              filter: 'drop-shadow(2px 2px 0px #181028)'
             }}>
               Share Apathy
             </h3>
@@ -198,14 +223,15 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              background: 'var(--color-surface-container-low)',
+              background: '#ffedf6',
               borderRadius: '20px',
               padding: '12px',
-              border: '1px solid var(--color-outline-variant)',
+              border: '3px solid #181028',
+              boxShadow: '3px 3px 0px #181028',
               minHeight: '160px',
               boxSizing: 'border-box'
             }}>
-              {pngDataUrl ? (
+              {pngDataUrl && pngDataUrl !== 'ERROR' ? (
                 <img
                   src={pngDataUrl}
                   alt="Post Preview"
@@ -217,18 +243,25 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                     objectFit: 'contain'
                   }}
                 />
+              ) : pngDataUrl === 'ERROR' ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '10px' }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: '32px', color: '#ff1744' }}>warning</span>
+                  <span style={{ fontSize: '13px', color: '#181028', fontWeight: 700 }}>
+                    Image export failed. You can still share text to X below.
+                  </span>
+                </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                   <span 
                     className="material-symbols-outlined animate-spin" 
                     style={{
                       fontSize: '32px',
-                      color: 'var(--color-primary)'
+                      color: '#ff2a85'
                     }}
                   >
                     refresh
                   </span>
-                  <span style={{ fontSize: '13px', color: 'var(--color-on-surface-variant)', fontWeight: 600 }}>
+                  <span style={{ fontSize: '13px', color: '#181028', fontWeight: 700 }}>
                     Rasterizing Canvas...
                   </span>
                 </div>
@@ -240,29 +273,28 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               
               {/* 1. Download PNG */}
               <button
-                disabled={!pngDataUrl}
+                disabled={!pngDataUrl || pngDataUrl === 'ERROR'}
                 onClick={handleDownload}
                 style={{
-                  background: 'var(--color-primary)',
-                  color: 'var(--color-on-primary)',
-                  border: 'none',
-                  padding: '14px',
-                  borderRadius: '9999px',
+                  background: '#ff2a85',
+                  color: '#ffffff',
+                  border: '3px solid #181028',
+                  borderRadius: '16px',
+                  fontFamily: 'Fredoka, sans-serif',
                   fontWeight: 800,
                   fontSize: '14px',
                   letterSpacing: '0.5px',
                   textTransform: 'uppercase',
-                  cursor: pngDataUrl ? 'pointer' : 'not-allowed',
-                  opacity: pngDataUrl ? 1 : 0.6,
+                  cursor: (pngDataUrl && pngDataUrl !== 'ERROR') ? 'pointer' : 'not-allowed',
+                  opacity: (pngDataUrl && pngDataUrl !== 'ERROR') ? 1 : 0.6,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  boxShadow: 'var(--shadow-vivid)',
+                  padding: '14px',
+                  boxShadow: '4px 4px 0px #181028',
                   transition: 'transform 0.1s, box-shadow 0.1s'
                 }}
-                onMouseDown={(e) => { if (pngDataUrl) { e.currentTarget.style.transform = 'translate(4px, 4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-active)'; } }}
-                onMouseUp={(e) => { if (pngDataUrl) { e.currentTarget.style.transform = 'translate(0, 0)'; e.currentTarget.style.boxShadow = 'var(--shadow-vivid)'; } }}
               >
                 <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>download</span>
                 Download PNG
@@ -270,30 +302,28 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
               {/* 2. Share to Instagram */}
               <button
-                disabled={!pngDataUrl}
+                disabled={!pngDataUrl || pngDataUrl === 'ERROR'}
                 onClick={handleShareInstagram}
                 style={{
-                  background: 'var(--color-secondary-container)',
-                  color: 'var(--color-on-secondary-container)',
-                  border: 'none',
-                  padding: '14px',
-                  borderRadius: '9999px',
+                  background: '#ffd600',
+                  color: '#181028',
+                  border: '3px solid #181028',
+                  borderRadius: '16px',
+                  fontFamily: 'Fredoka, sans-serif',
                   fontWeight: 800,
                   fontSize: '14px',
                   letterSpacing: '0.5px',
                   textTransform: 'uppercase',
-                  cursor: pngDataUrl ? 'pointer' : 'not-allowed',
-                  opacity: pngDataUrl ? 1 : 0.6,
+                  cursor: (pngDataUrl && pngDataUrl !== 'ERROR') ? 'pointer' : 'not-allowed',
+                  opacity: (pngDataUrl && pngDataUrl !== 'ERROR') ? 1 : 0.6,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  transition: 'transform 0.1s, filter 0.2s'
+                  padding: '14px',
+                  boxShadow: '4px 4px 0px #181028',
+                  transition: 'transform 0.1s, box-shadow 0.1s'
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.05)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; }}
-                onMouseDown={(e) => { if (pngDataUrl) e.currentTarget.style.transform = 'scale(0.97)'; }}
-                onMouseUp={(e) => { if (pngDataUrl) e.currentTarget.style.transform = 'scale(1)'; }}
               >
                 <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>photo_camera</span>
                 Share to Instagram
@@ -301,30 +331,27 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
               {/* 3. Share to X */}
               <button
-                disabled={!pngDataUrl}
                 onClick={handleShareX}
                 style={{
-                  background: '#000000',
-                  color: '#ffffff',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  padding: '14px',
-                  borderRadius: '9999px',
+                  background: '#ffffff',
+                  color: '#181028',
+                  border: '3px solid #181028',
+                  borderRadius: '16px',
+                  fontFamily: 'Fredoka, sans-serif',
                   fontWeight: 800,
                   fontSize: '14px',
                   letterSpacing: '0.5px',
                   textTransform: 'uppercase',
-                  cursor: pngDataUrl ? 'pointer' : 'not-allowed',
-                  opacity: pngDataUrl ? 1 : 0.6,
+                  cursor: 'pointer',
+                  opacity: 1,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  transition: 'transform 0.1s, background-color 0.2s'
+                  padding: '14px',
+                  boxShadow: '4px 4px 0px #181028',
+                  transition: 'transform 0.1s, box-shadow 0.1s'
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#151515'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#000000'; }}
-                onMouseDown={(e) => { if (pngDataUrl) e.currentTarget.style.transform = 'scale(0.97)'; }}
-                onMouseUp={(e) => { if (pngDataUrl) e.currentTarget.style.transform = 'scale(1)'; }}
               >
                 <span style={{ 
                   fontFamily: 'system-ui, -apple-system, sans-serif', 

@@ -48,14 +48,16 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
       <div style={{
         padding: '30px',
         textAlign: 'center',
-        color: isDark ? '#e5bdbe' : '#5c3f41',
-        fontStyle: 'italic',
-        background: isDark ? '#1a1523' : '#f4f3f8',
-        border: `1px dashed ${isDark ? '#906f70' : '#e5bdbe'}`,
-        borderRadius: '16px',
+        color: isDark ? '#ffd600' : '#181028',
+        fontStyle: 'normal',
+        fontWeight: 700,
+        background: isDark ? '#1e1233' : '#ffffff',
+        border: '3px dashed #181028',
+        borderRadius: '20px',
+        boxShadow: '4px 4px 0px #181028',
         width: '100%',
         boxSizing: 'border-box',
-        fontFamily: "'Plus Jakarta Sans', sans-serif"
+        fontFamily: "'Fredoka', sans-serif"
       }}>
         Manifest neutrality to view the post.
       </div>
@@ -64,29 +66,29 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
 
   const { content, likes, authorName, authorHandle, avatarUrl, avatarText } = post;
 
-  // Vivid Satire Color Tokens based on Theme
+  // Pop Art Comic Color Tokens based on Theme
   const themeColors = {
-    background: isDark ? '#0c0814' : '#ffffff',
-    border: isDark ? '#906f70' : '#e5bdbe',
-    text: isDark ? '#f1f0f5' : '#1a1b1f',
-    subText: isDark ? '#e5bdbe' : '#5c3f41',
-    primary: '#ba0035',
-    secondary: '#006970',
+    background: isDark ? '#1e1233' : '#ffffff',
+    border: '#181028',
+    text: isDark ? '#ffffff' : '#181028',
+    subText: isDark ? '#ffd600' : '#7b1fa2',
+    primary: '#ff2a85',
+    secondary: '#ffd600',
     glassBg: isDark ? 'rgba(0, 0, 0, 0.45)' : 'rgba(255, 255, 255, 0.2)',
-    glassText: isDark ? '#f1f0f5' : '#1a1b1f',
-    glassBorder: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.35)',
+    glassText: isDark ? '#ffffff' : '#181028',
+    glassBorder: '#181028',
   };
 
   // Card element inline styles for reliable SVG foreignObject image export
   const cardStyle: React.CSSProperties = {
     width: '100%',
     backgroundColor: themeColors.background,
-    border: `1px solid ${themeColors.border}`,
-    borderRadius: '16px',
-    boxShadow: isDark ? '0 10px 30px rgba(0, 0, 0, 0.5)' : '0 10px 30px rgba(186, 0, 53, 0.04)',
+    border: '3.5px solid #181028',
+    borderRadius: '20px',
+    boxShadow: isDark ? '6px 6px 0px #000000' : '6px 6px 0px #181028',
     overflow: 'hidden',
     boxSizing: 'border-box',
-    fontFamily: "'Plus Jakarta Sans', sans-serif",
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     textAlign: 'left',
     display: 'flex',
     flexDirection: 'column'
@@ -106,17 +108,19 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
         boxSizing: 'border-box'
       }}>
         <div style={{
-          width: '40px',
-          height: '40px',
+          width: '42px',
+          height: '42px',
           borderRadius: '50%',
-          border: `1px solid ${themeColors.border}`,
-          background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
+          border: '2.5px solid #181028',
+          boxShadow: '2px 2px 0px #181028',
+          background: 'linear-gradient(135deg, #ff2a85 0%, #ffd600 100%)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           color: '#ffffff',
-          fontWeight: 800,
-          fontSize: '14px',
+          fontWeight: 900,
+          fontSize: '15px',
+          fontFamily: 'Fredoka, sans-serif',
           letterSpacing: '0.5px',
           flexShrink: 0,
           overflow: 'hidden'
@@ -216,14 +220,12 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
                 margin: 0,
                 fontSize: `${fontSize}px`,
                 lineHeight: 1.6,
-                fontWeight: showFrame ? 600 : 500,
-                fontFamily: showFrame
-                  ? "Georgia, 'Times New Roman', serif"
-                  : "'Plus Jakarta Sans', Inter, sans-serif",
-                color: showFrame ? '#2d2b27' : '#f0ece4',
+                fontWeight: 600,
+                fontFamily: "Georgia, 'Times New Roman', serif",
+                color: '#2d2b27',
                 wordBreak: 'break-word',
                 width: '100%',
-                letterSpacing: showFrame ? '0' : '0.01em',
+                letterSpacing: '0',
               };
 
               return (
@@ -232,9 +234,7 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
                   marginRight: '-16px',
                   marginBottom: '16px',
                   aspectRatio: '1 / 1',
-                  background: showFrame
-                    ? '#faf8f2'
-                    : 'linear-gradient(145deg, #1a0a10 0%, #0a1a1c 100%)',
+                  background: '#faf8f2',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
@@ -249,7 +249,7 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
                     <span style={{
                       fontSize: '44px',
                       lineHeight: '1',
-                      fontFamily: 'Georgia, serif',
+                      fontFamily: "Georgia, 'Times New Roman', serif",
                       fontWeight: 'bold',
                       color: '#8b8678',
                       marginBottom: '6px',
@@ -289,6 +289,7 @@ export const CelebrityCard: React.FC<CelebrityCardProps> = ({
                 : '13px',
               fontWeight: 700,
               lineHeight: 1.45,
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
               color: themeColors.text,
             })}
           </div>
