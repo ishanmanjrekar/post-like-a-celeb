@@ -31,7 +31,17 @@
 
 ---
 
-## 3. Recommended Itch.io Tags
+## 3. GitHub Repository About Description & Topics
+* **About Description (Recommended):**
+  > `A satirical PR statement generator for performative celebrities and elites. Say everything, mean nothing.`
+* **Alternative Description:**
+  > `Interactive web app generating ultra-safe, non-committal celebrity PR statements and Notes App screenshots.`
+* **GitHub Repository Topics:**
+  `satire`, `pr-generator`, `react`, `typescript`, `vite`, `parody`, `web-app`, `gplv3`, `humor`
+
+---
+
+## 4. Recommended Itch.io Tags
 * `tool`
 * `satire`
 * `generator`
@@ -47,7 +57,7 @@
 
 ---
 
-## 4. Description (HTML Code for Itch.io Editor)
+## 5. Description (HTML Code for Itch.io Editor)
 *Copy and paste the HTML block below directly into the Itch.io page description field (HTML mode).*
 
 ```html

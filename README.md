@@ -59,3 +59,9 @@ npm run dev
 
 * **Support:** [Buy me a coffee on Ko-fi!](https://ko-fi.com/ishanmanjrekar/tip)
 * **Blog / Follow:** [Subscribe to Game Design Bites on Substack](https://gamedesignbites.substack.com/)
+
+---
+
+## 📄 License
+
+This project is licensed under the **GNU General Public License v3.0** (GPL-3.0-or-later) - see the [LICENSE](LICENSE) file for details.

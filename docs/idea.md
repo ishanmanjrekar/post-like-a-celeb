@@ -38,7 +38,7 @@ The app maintains a dictionary of 21 controversial, high-stakes topics. For each
 | **Genocide and ethnic cleansing** | Balancing national security with civilian relief | "Whether we discuss global conflicts and ethnic violence, let's send positive frequency to both national sovereignty and defense policy and civilian protection and international aid. Both are expressions of global peace and justice." |
 | **Climate change and global warming** | Balancing economy with environmental protection | "Both the economic growth and energy industry needs and the strict emission cuts and environmental bans perspectives have valid points. Climate change and rising global temperatures is highly complex, and taking extreme sides won't solve the underlying struggle." |
 | **Student protests and free speech** | Distracting with creative projects | "Speaking of student demonstrations and campus unrest, I am so excited to announce my new lecture tour on communication! Check out the sneak peek on my page!" |
-| **...and 18 more topics** | Covering healthcare, employment, inequality, human rights, media independence, electoral transparency, etc. | Refers to [topics.md](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs/topics.md) for the full list of 21 topics. |
+| **...and 18 more topics** | Covering healthcare, employment, inequality, human rights, media independence, electoral transparency, etc. | Refers to [topics.md](topics.md) for the full list of 21 topics. |
 
 ### 2. Post Identity & Grammar
 All generated posts are displayed under a single generic brand identity:

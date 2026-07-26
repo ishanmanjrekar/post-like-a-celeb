@@ -49,15 +49,15 @@ post-like-a-celeb/
 
 ## Core Subsystems & Logic Flow
 
-### 1. The Topic & Post Generation Engine ([src/utils/topics.ts](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/src/utils/topics.ts))
+### 1. The Topic & Post Generation Engine ([src/utils/topics.ts](../src/utils/topics.ts))
 This module exports static definitions and generator logic:
-- `topics`: Dictionary containing 21 controversial, high-stakes topics (defined in [topics.md](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs/topics.md)), featuring custom vocabulary attributes.
+- `topics`: Dictionary containing 21 controversial, high-stakes topics (defined in [topics.md](topics.md)), featuring custom vocabulary attributes.
 - `generatePost(topicId)`: Generates the post content:
-  - Selects between 1 (minimum) and 3 (maximum) random performative apathy styles from a list of 18 distinct styles (defined in [performative-apathy-styles.md](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs/performative-apathy-styles.md)).
+  - Selects between 1 (minimum) and 3 (maximum) random performative apathy styles from a list of 18 distinct styles (defined in [performative-apathy-styles.md](performative-apathy-styles.md)).
   - Combines the grammar blueprints (intros, topic-specific stances, and outros) of the selected styles using a dynamic Tracery compiler configuration to create a blended, satirical statement.
   - Returns a unified `GeneratedPost` object featuring the generic **Neutral Voice** (`@the_neutral_take`) profile metadata and the list of `activeStyles` names mixed in the generation.
 
-### 2. Platform Style Renderers ([src/components/CelebrityCard.tsx](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/src/components/CelebrityCard.tsx))
+### 2. Platform Style Renderers ([src/components/CelebrityCard.tsx](../src/components/CelebrityCard.tsx))
 Supports two layout styles selectable via tabs on the Preview screen:
 - **Text Post Layout**:
   - Displays the generated apathy statement as a text block in a styled card frame matching the Vivid Satire theme layout.
@@ -66,12 +66,12 @@ Supports two layout styles selectable via tabs on the Preview screen:
   - Displays the Instagram-style like counts, captions, and bookmark actions below the canvas.
 - **SVG Vector Icons**: To guarantee offline-friendly exports without font dependency errors, all icons (verified badge, heart, chat bubble, send arrow, bookmark) are hardcoded as inline SVG coordinates rather than web font ligatures.
 
-### 3. Client-Side Image Export Engine ([src/utils/imageExporter.ts](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/src/utils/imageExporter.ts))
+### 3. Client-Side Image Export Engine ([src/utils/imageExporter.ts](../src/utils/imageExporter.ts))
 Converts the active React component layout into a shareable image file:
 - Serializes the target `CelebrityCard` HTML DOM structure (utilizing inline CSS styles and SVG vector paths) inside an SVG `<foreignObject>` block.
 - Base64 encodes the SVG string, loads it into a canvas, and extracts a pixel-perfect PNG Data URL string.
 
-### 4. Sharing Pipeline ([src/components/ShareModal.tsx](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/src/components/ShareModal.tsx))
+### 4. Sharing Pipeline ([src/components/ShareModal.tsx](../src/components/ShareModal.tsx))
 Redesigned in the Vivid Satire theme, it provides exactly three actions:
 - **Download PNG**: Triggers direct file download.
 - **Share to Instagram**: Save files natively on mobile, or download and show toast instructions on desktop.
