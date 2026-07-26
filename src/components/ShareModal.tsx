@@ -43,7 +43,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   // 2. Share to X (Twitter Intent or Native Share if available)
   const handleShareX = async () => {
-    const text = `"${postText}"\n\nGenerated via Fence Sitter 🕊️`;
+    const text = `"${postText}"\n\nGenerated via The Fence-Sitter 🕊️`;
     
     // Try native share first on mobile
     if (navigator.share && pngDataUrl) {

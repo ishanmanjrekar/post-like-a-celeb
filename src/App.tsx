@@ -122,8 +122,8 @@ function App() {
                 <div className="pop-floating-star star-right">🌟</div>
 
                 <div className="pop-main-title">
-                  <span className="pop-title-line1">Celebrity</span>
-                  <span className="pop-title-line2">Fence Sitter</span>
+                  <span className="pop-title-line1">The</span>
+                  <span className="pop-title-line2">Fence-Sitter</span>
                 </div>
                 <div className="pop-subtitle-badge">
                   Apathy as a Service
@@ -137,15 +137,15 @@ function App() {
                 <div className="config-header">
                   <label className="config-label">
                     <span className="material-symbols-outlined">topic</span>
-                    Select Theme
+                    Select a Topic
                   </label>
                   <button
                     onClick={randomizeTopic}
                     className="shuffle-btn"
-                    title="Shuffle Theme"
+                    title="Randomise Topic"
                   >
                     <span className="material-symbols-outlined">casino</span>
-                    Shuffle
+                    Randomise
                   </button>
                 </div>
 
