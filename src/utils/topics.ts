@@ -440,7 +440,7 @@ const BASE_GRAMMAR = {
     "Wellness over conflict. ✨"
   ],
   transcendentalist_stance: [
-    "whether we discuss #noun#, let's send positive frequency to both #stance_a# and #stance_b#. Both are expressions of #concept#, and the universe will balance it organically."
+    "Whether we discuss #noun#, let's send positive frequency to both #stance_a# and #stance_b#. Both are expressions of #concept#, and the universe will balance it organically."
   ],
 
   // 2. CENTRIST
@@ -454,7 +454,7 @@ const BASE_GRAMMAR = {
     "Let's keep the dialogue civil."
   ],
   centrist_stance: [
-    "both the #stance_a# and the #stance_b# perspectives have valid points. #noun# is highly complex, and taking extreme sides won't solve the underlying struggle for #concept#."
+    "Both the #stance_a# and the #stance_b# perspectives have valid points. #noun# is highly complex, and taking extreme sides won't solve the underlying struggle for #concept#."
   ],
 
   // 3. DEFLECTOR
@@ -482,7 +482,7 @@ const BASE_GRAMMAR = {
     "Check out the link in my bio!"
   ],
   distractor_stance: [
-    "speaking of #noun#, I am so excited to announce #personal_pivot#! Check out the sneak peek on my page!"
+    "Speaking of #noun#, I am so excited to announce #personal_pivot#! Check out the sneak peek on my page!"
   ],
 
   // 5. CYNIC
@@ -496,7 +496,7 @@ const BASE_GRAMMAR = {
     "It's not that deep."
   ],
   cynic_stance: [
-    "imagine caring about #noun# seriously in 2026. Let's just fast-forward to #concept# dissolving entirely, it's so much more aesthetic. 🙄"
+    "Imagine caring about #noun# seriously in 2026. Let's just fast-forward to #concept# dissolving entirely, it's so much more aesthetic. 🙄"
   ],
 
   // 6. SANITIZER
@@ -506,11 +506,11 @@ const BASE_GRAMMAR = {
     "We are committed to fostering safety and inclusion."
   ],
   sanitizer_outro: [
-    "Comments have been disabled for this post.",
+    "We are all in this together.",
     "Hate has no home here. 🖤"
   ],
   sanitizer_stance: [
-    "we recognize the ongoing conversations around #noun#. We advocate for safe #concept# standards and stand with all communities navigating these changes."
+    "We recognize the ongoing conversations around #noun#. We advocate for safe #concept# standards and stand with all communities navigating these changes."
   ],
 
   // 7. BURNOUT
@@ -524,7 +524,7 @@ const BASE_GRAMMAR = {
     "Protecting my mental health."
   ],
   burnout_stance: [
-    "the constant headlines about #noun# are really triggering my anxiety and draining my energy. I need to step back to protect my peace and process #concept#."
+    "The constant headlines about #noun# are really triggering my anxiety and draining my energy. I need to step back to protect my peace and process #concept#."
   ],
 
   // 8. SELECTIVE
@@ -538,21 +538,21 @@ const BASE_GRAMMAR = {
     "Focus on what unites us."
   ],
   selective_stance: [
-    "let's focus on positive things we can all support, like #local_work#. True community care starts in our own backyard."
+    "Let's focus on positive things we can all support, like #local_work#. True community care starts in our own backyard."
   ],
 
   // 9. REPOSTER
   reposter_intro: [
-    "[Reposted from a third-party source] 🕊️",
-    "[Shared without comment]",
+    "Sharing this perspective today:",
+    "Passing this statement along:",
     "Forwarding this graphic today:"
   ],
   reposter_outro: [
-    "Expires in 24h.",
-    "Shared for awareness."
+    "Shared for awareness.",
+    "For community awareness."
   ],
   reposter_stance: [
-    "Sharing this graphic about #noun# for general awareness. #concept# represents a choice. (Post auto-expires in 24 hours)."
+    "Sharing this graphic about #noun# for general awareness. #concept# represents a choice."
   ],
 
   // 10. PHILANTHROPIST
@@ -580,7 +580,7 @@ const BASE_GRAMMAR = {
     "Find your own meaning."
   ],
   aesthetic_stance: [
-    "the tension between #stance_a# and #stance_b# is the central theme of #art_metaphor#, which is where my true message lies."
+    "The tension between #stance_a# and #stance_b# is the central theme of #art_metaphor#, which is where my true message lies."
   ],
 
   // 12. FILIBUSTER
@@ -594,7 +594,7 @@ const BASE_GRAMMAR = {
     "Wait for the full report."
   ],
   filibuster_stance: [
-    "we need more data and multi-year longitudinal studies on #noun# before taking a definitive stance on the future of #concept#."
+    "We need more data and multi-year longitudinal studies on #noun# before taking a definitive stance on the future of #concept#."
   ],
 
   // 13. VICTIM
@@ -608,7 +608,7 @@ const BASE_GRAMMAR = {
     "Respect my boundaries."
   ],
   victim_stance: [
-    "accusing me of silence on #noun# is just online harassment. Forcing public figures to choose between #stance_a# and #stance_b# violates my peace."
+    "Accusing me of silence on #noun# is just online harassment. Forcing public figures to choose between #stance_a# and #stance_b# violates my peace."
   ],
 
   // 14. BUREAUCRAT
@@ -618,11 +618,11 @@ const BASE_GRAMMAR = {
     "PR guidelines dictate that I stay neutral..."
   ],
   bureaucrat_outro: [
-    "Managed by legal counsel.",
-    "Contractual obligations first."
+    "Focusing on our ongoing commitments.",
+    "Prioritizing our team and community."
   ],
   bureaucrat_stance: [
-    "our management team has advised us that public statements on #noun# are a high risk for our partnerships, so we must stay neutral on #concept#."
+    "Our management team has advised us that public statements on #noun# are a high risk for our partnerships, so we must stay neutral on #concept#."
   ],
 
   // 15. HYPERLOCAL
@@ -636,7 +636,7 @@ const BASE_GRAMMAR = {
     "Local change is real change."
   ],
   hyperlocal_stance: [
-    "broader issues like #noun# are too large, so I focus entirely on #local_work# where I can make a real difference."
+    "Broader issues like #noun# are too large, so I focus entirely on #local_work# where I can make a real difference."
   ],
 
   // 16. PROXY
@@ -646,11 +646,11 @@ const BASE_GRAMMAR = {
     "Letting the commercial message speak on social:"
   ],
   proxy_outro: [
-    "Sponsored partnership. 🤝",
-    "Ad / Collab."
+    "Supporting shared values together. 🤝",
+    "Grateful for meaningful collaboration."
   ],
   proxy_stance: [
-    "partnering with our brand sponsors to support a general campaign for #concept# while wearing this new collection! #noun# awareness matters."
+    "Partnering with our brand sponsors to support a general campaign for #concept# while wearing this new collection! #noun# awareness matters."
   ],
 
   // 17. ARMORED
@@ -664,7 +664,7 @@ const BASE_GRAMMAR = {
     "Toxic energy blocked."
   ],
   armored_stance: [
-    "demanding my commentary on #noun# is a form of digital violence and trauma dumping. I am protecting my boundaries and safe space."
+    "Demanding my commentary on #noun# is a form of digital violence and trauma dumping. I am protecting my boundaries and safe space."
   ],
 
   // 18. META
@@ -678,36 +678,36 @@ const BASE_GRAMMAR = {
     "Focus on civility."
   ],
   meta_stance: [
-    "the social media discourse around #noun# is too combative. People are fighting over #stance_a# vs #stance_b# instead of focusing on civil dialogue."
+    "The social media discourse around #noun# is too combative. People are fighting over #stance_a# vs #stance_b# instead of focusing on civil dialogue."
   ],
 
   // ── Short stances for multi-style blending (50-80 chars each) ──────────────
   // Used when combining 2 or 3 styles so the result stays under the char limit.
 
   transcendentalist_stance_short: [
-    "sending love to all sides of this 🌿",
-    "the universe will balance it — I trust the process. 🧘‍♀️",
-    "both perspectives deserve healing energy. 🤍"
+    "Sending love to all sides of this 🌿",
+    "The universe will balance it — I trust the process. 🧘‍♀️",
+    "Both perspectives deserve healing energy. 🤍"
   ],
   centrist_stance_short: [
-    "both sides have a point, honestly.",
+    "Both sides have a point, honestly.",
     "I see merit in every perspective here.",
-    "the truth is somewhere in the middle. 🕊️"
+    "The truth is somewhere in the middle. 🕊️"
   ],
   deflector_stance_short: [
     "I'm just an artist — not a policy expert.",
-    "please do your own research on this. 📚",
-    "nobody should take my take seriously."
+    "Please do your own research on this. 📚",
+    "Nobody should take my take seriously."
   ],
   distractor_stance_short: [
-    "anyway, #personal_pivot# drops soon! 🎉",
-    "speaking of which — check my bio link! ✨",
-    "exciting personal news coming very soon!"
+    "Anyway, #personal_pivot# drops soon! 🎉",
+    "Speaking of which — check my bio link! ✨",
+    "Exciting personal news coming very soon!"
   ],
   cynic_stance_short: [
-    "caring about this in 2026 is giving so much. 🙄",
-    "it's not that deep, honestly.",
-    "chronically online behavior. 🤡"
+    "Caring about this in 2026 is giving so much. 🙄",
+    "It's not that deep, honestly.",
+    "Chronically online behavior. 🤡"
   ],
   sanitizer_stance_short: [
     "We stand with all communities. 🖤",
@@ -715,64 +715,64 @@ const BASE_GRAMMAR = {
     "Violence is unacceptable, full stop."
   ],
   burnout_stance_short: [
-    "this is draining my energy. I need space. 🔋",
-    "taking time to protect my peace.",
-    "the headlines alone are overwhelming me."
+    "This is draining my energy. I need space. 🔋",
+    "Taking time to protect my peace.",
+    "The headlines alone are overwhelming me."
   ],
   selective_stance_short: [
-    "focusing on #local_work# instead. 🌱",
-    "real change starts locally.",
-    "let's talk about something we can all agree on."
+    "Focusing on #local_work# instead. 🌱",
+    "Real change starts locally.",
+    "Let's talk about something we can all agree on."
   ],
   reposter_stance_short: [
-    "sharing for awareness only. [No comment.]",
-    "just a repost — make of it what you will.",
-    "forwarding this. Post expires in 24h."
+    "Sharing for awareness only.",
+    "Just sharing this perspective — make of it what you will.",
+    "Forwarding this graphic for general awareness."
   ],
   philanthropist_stance_short: [
     "I donate quietly — no need for a post.",
-    "my foundation does the work. 💳",
-    "action over words, always."
+    "My foundation does the work. 💳",
+    "Action over words, always."
   ],
   aesthetic_stance_short: [
-    "my art says what I can't. 🎨",
-    "the work is the statement.",
-    "find your own meaning in #art_metaphor#."
+    "My art says what I can't. 🎨",
+    "The work is the statement.",
+    "Find your own meaning in #art_metaphor#."
   ],
   filibuster_stance_short: [
-    "the full facts aren't in yet.",
+    "The full facts aren't in yet.",
     "I'm waiting for more clarity before commenting.",
-    "more analysis is needed. Wait for the report."
+    "More analysis is needed. Wait for the report."
   ],
   victim_stance_short: [
-    "demanding my opinion is harassment. 🚫",
+    "Demanding my opinion is harassment. 🚫",
     "I'm a person, not a position paper.",
-    "respect my boundaries on this."
+    "Respect my boundaries on this."
   ],
   bureaucrat_stance_short: [
-    "my team has advised me not to comment.",
-    "contractually, I genuinely can't say more.",
+    "My team has advised me not to comment.",
+    "Contractually, I genuinely can't say more.",
     "PR guidelines require I stay neutral."
   ],
   hyperlocal_stance_short: [
-    "my bandwidth is full with local causes. 🏡",
+    "My bandwidth is full with local causes. 🏡",
     "I focus where I can make a real difference.",
     "#local_work# is where I put my energy."
   ],
   proxy_stance_short: [
-    "the brand collab speaks for itself. ♻️",
-    "our sponsor's campaign says it all.",
-    "partnered content incoming — stay tuned. 🤝"
+    "The brand collab speaks for itself. ♻️",
+    "Our sponsor's campaign says it all.",
+    "Partnered content incoming — stay tuned. 🤝"
   ],
   armored_stance_short: [
-    "this is a violation of my peace. 🛡️",
-    "protecting my boundaries.",
-    "toxic energy blocked."
+    "This is a violation of my peace. 🛡️",
+    "Protecting my boundaries.",
+    "Toxic energy blocked."
   ],
   meta_stance_short: [
-    "the discourse around this is just too toxic.",
-    "everyone needs to lower the temperature.",
-    "the polarization IS the real problem."
+    "The discourse around this is just too toxic.",
+    "Everyone needs to lower the temperature.",
+    "The polarization IS the real problem."
   ],
 
   // 19. FORMULA (PenPencilDraw Matrix)
@@ -788,7 +788,7 @@ const BASE_GRAMMAR = {
     "Let's choose empathy over division. ✨"
   ],
   formula_stance: [
-    "my heart goes out to #formula_target#. This is #formula_situation#. We must remember #formula_principle#, and I'm sure we can #formula_resolution#."
+    "My heart goes out to #formula_target#. This is #formula_situation#. We must remember #formula_principle#, and I'm sure we can #formula_resolution#."
   ],
   formula_target: [
     "the students",
@@ -820,11 +820,32 @@ const BASE_GRAMMAR = {
     "build bridges through mutual respect"
   ],
   formula_stance_short: [
-    "my heart goes out to everyone affected — humanity comes first. 🤍",
-    "this is a time to reflect, not divide. I'm sure we can find common ground. 🕊️",
-    "there are no easy answers, but every voice matters."
+    "My heart goes out to everyone affected — humanity comes first. 🤍",
+    "This is a time to reflect, not divide. I'm sure we can find common ground. 🕊️",
+    "There are no easy answers, but every voice matters."
   ],
 };
+
+/**
+ * Ensures proper paragraph and sentence capitalization throughout generated text.
+ * Capitalizes the first character of each paragraph, and the first letter of each sentence,
+ * including sentences starting after emojis or sentence punctuation (. ! ?).
+ */
+export function formatPostCapitalization(text: string): string {
+  if (!text) return text;
+  return text
+    .split('\n\n')
+    .map((paragraph) => {
+      const trimmed = paragraph.trim();
+      if (!trimmed) return paragraph;
+
+      return trimmed.replace(
+        /(^|[.!?][\s\p{Extended_Pictographic}\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]*)([a-z])/gu,
+        (_match, prefix, char) => prefix + char.toUpperCase()
+      );
+    })
+    .join('\n\n');
+}
 
 // Generates a mock post based on selected topic
 export function generatePost(topicId: string): GeneratedPost {
@@ -934,6 +955,9 @@ export function generatePost(topicId: string): GeneratedPost {
     }
     content = truncated + '...';
   }
+
+  // Format paragraph and sentence capitalization across the post text
+  content = formatPostCapitalization(content);
 
   // Randomize engagement metrics
   const viewsNum = Math.floor(Math.random() * 8900000) + 100000; // 100K to 9M

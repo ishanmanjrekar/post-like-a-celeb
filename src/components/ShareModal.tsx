@@ -14,7 +14,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   pngDataUrl,
   postText
 }) => {
-  const [showInstaTip, setShowInstaTip] = useState(false);
+  const [shareFeedback, setShareFeedback] = useState<string | null>(null);
 
   // Helper to convert base64 data URL to blob
   const dataURLtoBlob = (dataurl: string) => {
@@ -32,7 +32,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   // 1. Download PNG
   const handleDownload = () => {
-    if (!pngDataUrl) return;
+    if (!pngDataUrl || pngDataUrl === 'ERROR') return;
     const link = document.createElement('a');
     link.href = pngDataUrl;
     link.download = `fence-sitter-apathy-${Date.now()}.png`;
@@ -41,59 +41,49 @@ export const ShareModal: React.FC<ShareModalProps> = ({
     document.body.removeChild(link);
   };
 
-  // 2. Share to X (Twitter Intent or Native Share if available)
-  const handleShareX = async () => {
+  // 2. Single Share Action (Native Web Share API if supported, clipboard + download fallback)
+  const handleShare = async () => {
     const text = `"${postText}"\n\nGenerated via The Fence-Sitter 🕊️`;
-    
-    // Try native share first on mobile
-    if (navigator.share && pngDataUrl) {
+
+    // Try native Web Share API (Mobile / supported browsers)
+    if (navigator.share && pngDataUrl && pngDataUrl !== 'ERROR') {
       try {
         const blob = dataURLtoBlob(pngDataUrl);
         const file = new File([blob], 'fence-sitter-post.png', { type: 'image/png' });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           await navigator.share({
-            files: [file],
-            title: 'Share to X',
+            title: 'The Fence-Sitter',
+            text: text,
+            files: [file]
+          });
+          return;
+        } else {
+          await navigator.share({
+            title: 'The Fence-Sitter',
             text: text
           });
           return;
         }
       } catch (err) {
-        console.warn('Native share failed, falling back to URL intent:', err);
+        if ((err as Error)?.name === 'AbortError') return;
+        console.warn('Native share cancelled or failed:', err);
       }
     }
 
-    // Fallback/Desktop: Open intent link
-    const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-    window.open(xShareUrl, '_blank', 'noopener,noreferrer');
-  };
-
-  // 3. Share to Instagram (Native share with file on mobile, or download + show instructions on desktop)
-  const handleShareInstagram = async () => {
-    if (!pngDataUrl) return;
-
-    // Mobile: Try to share image file natively
-    if (navigator.share) {
-      try {
-        const blob = dataURLtoBlob(pngDataUrl);
-        const file = new File([blob], 'instagram-post.png', { type: 'image/png' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            files: [file],
-            title: 'Share to Instagram',
-            text: '#ApathyVibes'
-          });
-          return;
-        }
-      } catch (err) {
-        console.warn('Native Instagram share failed:', err);
+    // Fallback: Copy post text to clipboard and trigger PNG download
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+        setShareFeedback('Post text copied to clipboard & image downloaded!');
+      } else {
+        setShareFeedback('Image downloaded!');
       }
+    } catch {
+      setShareFeedback('Image downloaded!');
     }
 
-    // Desktop/Fallback: Trigger download and display a helpful tooltip tip
     handleDownload();
-    setShowInstaTip(true);
-    setTimeout(() => setShowInstaTip(false), 5000);
+    setTimeout(() => setShareFeedback(null), 4500);
   };
 
   // Keyboard Escape key support to close modal
@@ -205,15 +195,16 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               ✕
             </button>
 
+            {/* Clean Pop Art Title Fix */}
             <h3 style={{
-              margin: '0 0 4px 0',
+              margin: '0',
               fontFamily: 'Fredoka, sans-serif',
-              fontSize: '24px',
+              fontSize: '26px',
               fontWeight: 800,
-              letterSpacing: '-0.3px',
+              letterSpacing: '0.5px',
               color: '#ff2a85',
-              WebkitTextStroke: '1px #ffffff',
-              filter: 'drop-shadow(2px 2px 0px #181028)'
+              textShadow: '2px 2px 0px #181028',
+              lineHeight: 1.2
             }}>
               Share Apathy
             </h3>
@@ -225,8 +216,8 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               alignItems: 'center',
               background: '#ffedf6',
               borderRadius: '20px',
-              padding: '12px',
-              border: '3px solid #181028',
+              padding: '14px',
+              border: '3.5px solid #181028',
               boxShadow: '3px 3px 0px #181028',
               minHeight: '160px',
               boxSizing: 'border-box'
@@ -237,9 +228,8 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                   alt="Post Preview"
                   style={{
                     maxWidth: '100%',
-                    maxHeight: '200px',
-                    borderRadius: '12px',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.15)',
+                    maxHeight: '220px',
+                    borderRadius: '0px',
                     objectFit: 'contain'
                   }}
                 />
@@ -247,7 +237,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '10px' }}>
                   <span className="material-symbols-outlined" style={{ fontSize: '32px', color: '#ff1744' }}>warning</span>
                   <span style={{ fontSize: '13px', color: '#181028', fontWeight: 700 }}>
-                    Image export failed. You can still share text to X below.
+                    Image export failed. You can still share text below.
                   </span>
                 </div>
               ) : (
@@ -268,7 +258,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               )}
             </div>
 
-            {/* Direct Action Pipeline - Pill Styled Buttons */}
+            {/* Direct Action Pipeline - 2 Buttons: Download PNG & Single Share Button */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               
               {/* 1. Download PNG */}
@@ -300,10 +290,10 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                 Download PNG
               </button>
 
-              {/* 2. Share to Instagram */}
+              {/* 2. Single Share Button (Replaces Share to Instagram & Share to X) */}
               <button
                 disabled={!pngDataUrl || pngDataUrl === 'ERROR'}
-                onClick={handleShareInstagram}
+                onClick={handleShare}
                 style={{
                   background: '#ffd600',
                   color: '#181028',
@@ -325,62 +315,31 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                   transition: 'transform 0.1s, box-shadow 0.1s'
                 }}
               >
-                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>photo_camera</span>
-                Share to Instagram
-              </button>
-
-              {/* 3. Share to X */}
-              <button
-                onClick={handleShareX}
-                style={{
-                  background: '#ffffff',
-                  color: '#181028',
-                  border: '3px solid #181028',
-                  borderRadius: '16px',
-                  fontFamily: 'Fredoka, sans-serif',
-                  fontWeight: 800,
-                  fontSize: '14px',
-                  letterSpacing: '0.5px',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer',
-                  opacity: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '14px',
-                  boxShadow: '4px 4px 0px #181028',
-                  transition: 'transform 0.1s, box-shadow 0.1s'
-                }}
-              >
-                <span style={{ 
-                  fontFamily: 'system-ui, -apple-system, sans-serif', 
-                  fontSize: '15px', 
-                  fontWeight: 900 
-                }}>𝕏</span>
-                Share to X
+                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>share</span>
+                Share
               </button>
             </div>
 
-            {/* Informational tip for Instagram sharing on desktop */}
+            {/* Informational Feedback */}
             <AnimatePresence>
-              {showInstaTip && (
+              {shareFeedback && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   style={{
-                    fontSize: '12px',
-                    color: 'var(--color-on-secondary-container)',
-                    background: 'var(--color-secondary-container)',
-                    padding: '8px 12px',
+                    fontSize: '13px',
+                    color: '#181028',
+                    background: '#ffd600',
+                    padding: '10px 14px',
                     borderRadius: '12px',
-                    fontWeight: 600,
+                    fontWeight: 700,
                     lineHeight: '1.4',
-                    border: '1px solid var(--color-outline-variant)'
+                    border: '2px solid #181028',
+                    boxShadow: '2px 2px 0px #181028'
                   }}
                 >
-                  📸 Image downloaded! Open Instagram and choose the image from your gallery to share.
+                  ✨ {shareFeedback}
                 </motion.div>
               )}
             </AnimatePresence>

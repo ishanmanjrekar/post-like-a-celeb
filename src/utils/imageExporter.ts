@@ -11,13 +11,20 @@ export async function exportElementAsPng(
   _width?: number,
   _height?: number
 ): Promise<string> {
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: null,
-    logging: false,
-  });
+  const originalBorderRadius = element.style.borderRadius;
+  element.style.borderRadius = '0px';
 
-  return canvas.toDataURL('image/png');
+  try {
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null,
+      logging: false,
+    });
+
+    return canvas.toDataURL('image/png');
+  } finally {
+    element.style.borderRadius = originalBorderRadius;
+  }
 }

@@ -1,38 +1,61 @@
-# React + TypeScript + Vite
+# 🎭 The Fence-Sitter: Performative Apathy Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> **Say everything. Mean nothing. Master the art of PR-approved apathy.**
 
-## Documentation
-You can find the core concept and technical logic documentation in the [docs](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs) directory:
-- [Game Concept & Idea](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs/idea.md)
-- [Tech Stack & Code Logic](file:///c:/Users/ishan/Documents/GitHub/post-like-a-celeb/docs/logic.md)
+In a world overflowing with global crises, systemic issues, and urgent calls for accountability, our beloved celebrities and people in power have made a brave collective choice: **to completely disassociate from reality**.
 
+Why take a genuine stance when you have a brand to protect, sponsorships to maintain, and follower counts to preserve? However, crafting a statement that *looks* deeply concerned while taking no actual position takes precious time away from your luxury retreat.
 
-Currently, two official plugins are available:
+To reduce the burden on our hardworking elites, **The Fence-Sitter** was built to help. If you are a celebrity, influencer, corporate executive, or anyone who wants to be masterfully performative while remaining truly apathetic, use this tool for all your public relations ideas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Features & How It Works
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**The Fence-Sitter** is a web-based satirical generator designed to craft ultra-diplomatic, non-committal PR statements instantly.
 
-## Expanding the Oxlint configuration
+* **Choose Your Controversy:** Select from trending global topics, social dilemmas, or corporate scandals.
+* **Set Your Performative Tone:** Fine-tune your stance—ranging from *"Vague Thoughts & Prayers"* to *"Aggressively Neutral"* and *"Both Sides Have Valid Points"*.
+* **Pick Your Aesthetic:** Choose iconic celebrity post styles, including the classic iOS Notes App screenshot, dark mode story aesthetic, or official PR text.
+* **Export & Share:** Download your statement as a social-media-ready image or copy the text directly to your clipboard. Zero genuine effort required!
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+---
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## 🛠️ Tools Used & Credits
+
+* **Development Environment:** Google Antigravity IDE
+* **AI Assistance:** Gemini
+* **Design & Graphics:** Affinity
+* **Core Web Stack:** React, TypeScript, Vite, Pop Art Design System, Zustand
+
+---
+
+## 📚 Project Documentation
+
+Explore the repository documentation in the [`docs/`](docs/) directory:
+* 📄 [Game Concept & Idea](docs/idea.md)
+* 📄 [Tech Stack & Architecture Logic](docs/logic.md)
+
+---
+
+## 💻 Local Development
+
+### Prerequisites
+* Node.js (v18 or higher)
+* npm
+
+### Setup Instructions
+```bash
+# Install dependencies
+npm install
+
+# Run dev server
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## ☕ Support / Follow
+
+* **Support:** [Buy me a coffee on Ko-fi!](https://ko-fi.com/ishanmanjrekar/tip)
+* **Blog / Follow:** [Subscribe to Game Design Bites on Substack](https://gamedesignbites.substack.com/)
